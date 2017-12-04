@@ -2,9 +2,9 @@
 /.classpath
 /.project
 /.settings/
-
+/.idea/
 src/main/resources/jdbc.properties
 
 src/main/resources/jdbc.properties
-
+ads.iml
 .DS_Store
