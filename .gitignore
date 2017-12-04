@@ -1,0 +1,10 @@
+/target/
+/.classpath
+/.project
+/.settings/
+
+src/main/resources/jdbc.properties
+
+src/main/resources/jdbc.properties
+
+.DS_Store
