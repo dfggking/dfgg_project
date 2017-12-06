@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+  <!-- 定义httpclient连接池 -->
+  <bean id="httpClientConnectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager"
+        destroy-method="close">
+    <!--设置连接总数-->
+    <property name="maxTotal" value="100"/>
+    <!--设置每个地址的并发数-->
+    <property name="defaultMaxPerRoute" value="100"/>
+  </bean>
+  
+  <!--定义HttpClient工厂 这里使用HttpClientBuilder构建-->
+  <bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder" factory-method="create">
+    <property name="connectionManager" ref="httpClientConnectionManager"/>
+  </bean>
+  
+  <!--得到httpClient实例-->
+  <bean id="httpClient" factory-bean="httpClientBuilder" factory-method="build"></bean>
+  
+  <!--定期清理无效的连接-->
+  <bean class="com.ads.common.http.ClearConnectionsHandler" destroy-method="shutdown">
+    <constructor-arg index="0" ref="httpClientConnectionManager"></constructor-arg>
+  </bean>
+  
+  <!--定义requestConfig的工厂-->
+  <bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig.Builder">
+    <!--从连接池中获取到连接的最长时间-->
+    <property name="connectionRequestTimeout" value="500"/>
+    <!--创建连接的最长时间-->
+    <property name="connectTimeout" value="5000"/>
+    <!--数据传输的最长时间-->
+    <property name="socketTimeout" value="30000"/>
+    <!--提交请求前测试连接是否可用-->
+    <!--<property name="" value=""/>-->
+  </bean>
+  
+  <!--得到requestConfig实例-->
+  <bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="build"></bean>
+</beans>

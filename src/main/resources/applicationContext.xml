@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
   <!-- 数据源 -->
   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" scope="singleton">
     <property name="username" value="${jdbc.username}" />
@@ -14,6 +24,56 @@
     <property name="timeBetweenEvictionRunsMillis" value="900000" />
     <property name="minEvictableIdleTimeMillis" value="1200000" />
   </bean>
+  <!-- 配置 Hibernate SessionFactory -->
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="packagesToScan">
+      <list>
+        <value>com.ads.entity</value>
+      </list>
+    </property>
+    <!-- hibernate的相关属性配置 -->
+    <property name="hibernateProperties">
+      <props>
+        <prop key="hibernate.show_sql">false</prop>
+        <prop key="hibernate.format_sql">false</prop><!-- 格式化SQL，显示优化 -->
+        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop><!-- 设置数据库方言 -->
+        <prop key="hibernate.connection.autocommit">false</prop>
+        <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/ads</prop>
+        <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+      </props>
+    </property>
+  </bean>
   
+  <bean id="hibernateTemplate" class="org.springframework.orm.hibernate5.HibernateTemplate">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+  <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+  <!-- 定义事务管理器 -->
+  <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager" scope="singleton">
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+  <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
   
+  <!-- 激活@Controller注解模式 -->
+  <mvc:annotation-driven />
+  
+  <!--配置注解扫描器-->
+  <context:component-scan base-package="com.ads.common.http"/>
+  <context:component-scan base-package="com.ads.controller, com.ads.service"/>
+  
+  <!--加载资源文件-->
+  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <!--配置资源文件-->
+    <property name="locations">
+      <list>
+        <value>classpath:jdbc.properties</value>
+      </list>
+    </property>
+  </bean>
+  
+  <!--引入httpclient-->
+  <import resource="spring-httpclient.xml"/>
 </beans>
