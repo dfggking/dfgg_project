@@ -1,8 +1,7 @@
 package com.ads.service;
 
 /**
- * PC端登录Service
- *
+ * 登录 Service
  * @author dfggking@hotmail.com
  * @version 1.0
  * @date 2017-06-28

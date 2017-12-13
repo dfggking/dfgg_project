@@ -1,6 +1,7 @@
 package com.ads.controller;
 
 import com.ads.common.base.BaseController;
+import com.ads.entity.LoginInfo;
 import com.ads.service.LoginService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -16,8 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * PC端登录Controller
- *
+ * 登录 Controller
  * @author dfggking@hotmail.com
  * @version 1.0
  * @date 2017-06-28
@@ -41,13 +41,10 @@ public class LoginController extends BaseController {
     @RequestMapping(value=REGISTER)
     @ResponseBody
     public Map<String, Object> register(HttpServletRequest request, HttpServletResponse response){
-//        Map<String, Object> resultMap = new HashMap<String, Object>();
-//        Users hadUser = loginService.getUser(user.getIdWechat());
-//        if (Objects.nonNull(hadUser)) {
-//            resultMap.put(STATUS, 0);
-//            resultMap.put(INFO, "用户已存在");
-//            return resultMap;
-//        }
+        Map<String, Object> resultMap = new HashMap<String, Object>(16);
+
+
+
 
         return null;
     }

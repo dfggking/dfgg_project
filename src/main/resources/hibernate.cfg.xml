@@ -4,9 +4,19 @@
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="connection.url">jdbc:mysql://localhost:3306/ads</property>
+    <property name="connection.url">jdbc:mysql://localhost:3306/adsdb</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-   
+    <mapping class="com.ads.entity.Feedback"/>
+    <mapping class="com.ads.entity.Forex"/>
+    <mapping class="com.ads.entity.ForexHistory"/>
+    <mapping class="com.ads.entity.LoginInfo"/>
+    <mapping class="com.ads.entity.NoticeBulletin"/>
+    <mapping class="com.ads.entity.Order"/>
+    <mapping class="com.ads.entity.Price"/>
+    <mapping class="com.ads.entity.RoleInfo"/>
+    <mapping class="com.ads.entity.Transaction"/>
+    <mapping class="com.ads.entity.UserInfo"/>
+  
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
     
