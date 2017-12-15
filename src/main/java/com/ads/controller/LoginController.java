@@ -1,7 +1,6 @@
 package com.ads.controller;
 
 import com.ads.common.base.BaseController;
-import com.ads.entity.LoginInfo;
 import com.ads.service.LoginService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * 登录 Controller
@@ -33,7 +31,6 @@ public class LoginController extends BaseController {
 
     private final static String SING_IN = "/signin";
     private final static String REGISTER = "/register";
-//    private final static String
 
     @Autowired
     private LoginService loginService;

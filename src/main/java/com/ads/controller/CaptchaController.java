@@ -36,6 +36,7 @@ public class CaptchaController {
      * 发送验证码
      * @return
      */
+    @RequestMapping(value = CAPTCHA_SEND)
     public int sendCaptcha(String tel) throws IOException {
         Random random = new Random();
         int captcha = random.nextInt(10000);

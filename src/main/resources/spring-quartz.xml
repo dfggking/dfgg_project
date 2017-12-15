@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+  
+  <!--外汇通 定时任务-->
+  <bean name="whtDataScanTaskJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass" value="com.ads.datatask.task.WhtDataScanTask" />
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="timeout" value="36000"/>
+      </map>
+    </property>
+  </bean>
+  
+  
+  
+  <!--外汇通 trigger 触发器-->
+  <bean id="whtDataScanTaskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+    <property name="jobDetail" ref="whtDataScanTaskJob"/>
+    <property name="startDelay" value="3000"/>
+    <property name="repeatInterval" value="3000"/><!--3秒调度一次-->
+  </bean>
+  
+  
+  
+  <!--启动任务-->
+  <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+    
+    <property name="triggers">
+      <list>
+        <ref bean="whtDataScanTaskTrigger"></ref>
+        <!--<ref bean=""></ref>-->
+      </list>
+    </property>
+    <property name="jobFactory" ref="quartzJobFactory"/>
+  </bean>
+</beans>

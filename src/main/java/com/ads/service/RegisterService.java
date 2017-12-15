@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  * @date 2017-06-28
  */
-@Service
 public interface RegisterService {
 
     /**

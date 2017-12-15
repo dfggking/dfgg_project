@@ -34,8 +34,9 @@ import java.util.Objects;
  * @version 1.0
  * @date 2017-06-28
  */
-@Component("httpClientUtil")
+@Component
 public class HttpClientUtil implements BeanFactoryAware {
+
     private BeanFactory beanFactory;
     /**
      * Callback that supplies the owning factory to a bean instance.
@@ -133,11 +134,6 @@ public class HttpClientUtil implements BeanFactoryAware {
         // 执行请求
         try {
             response = this.getHttpClient().execute(httpPost);
-            // 判断返回状态是否为200
-            /*if (response.getStatusLine().getStatusCode() == 200) {
-                String content = EntityUtils.toString(response.getEntity(), "UTF-8");
-                System.out.println(content);
-            }*/
             return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity()
                     , "UTF-8"));
         } catch (IOException e) {

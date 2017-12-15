@@ -5,7 +5,9 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * Created by jinyf on 2017/12/6.
+ * @author dfggking@hotmail.com
+ * @version 1.0
+ * @date 2017/12/14
  */
 @Entity
 @Table(name = "notice_bulletin", schema = "adsdb", catalog = "")

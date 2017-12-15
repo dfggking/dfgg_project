@@ -38,6 +38,7 @@ public class RegisterController extends BaseController {
      * 注册发送验证码
      */
     private final static String SEND_CAPTCHA = "/sendCaptcha";
+
     @Autowired
     private RegisterService registerService;
 

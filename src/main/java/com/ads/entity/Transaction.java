@@ -9,11 +9,13 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
- * Created by jinyf on 2017/12/6.
+ * @author dfggking@hotmail.com
+ * @version 1.0
+ * @date 2017/12/14
  */
 @Entity
 public class Transaction {
-    private int id;
+    private String id;
     private String userId;
     private String remark;
     private Timestamp createTime;
@@ -22,11 +24,11 @@ public class Transaction {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -85,7 +87,7 @@ public class Transaction {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return id == that.id &&
+        return Objects.equals(id, that.id) &&
                 Objects.equals(userId, that.userId) &&
                 Objects.equals(remark, that.remark) &&
                 Objects.equals(createTime, that.createTime) &&
