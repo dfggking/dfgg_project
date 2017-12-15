@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * @author dfggking@hotmail.com
  * @version 1.0
- * @date 2017/12/14
+ * @date 2017/12/15
  */
 @Entity
 public class Order {
@@ -27,127 +27,127 @@ public class Order {
     private Timestamp createTime;
     private Timestamp updateTime;
     private Timestamp strikeTime;
-
+    
     @Id
     @Column(name = "id")
     public String getId() {
         return id;
     }
-
+    
     public void setId(String id) {
         this.id = id;
     }
-
+    
     @Basic
     @Column(name = "user_id")
     public String getUserId() {
         return userId;
     }
-
+    
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
+    
     @Basic
     @Column(name = "forex_id")
     public String getForexId() {
         return forexId;
     }
-
+    
     public void setForexId(String forexId) {
         this.forexId = forexId;
     }
-
+    
     @Basic
     @Column(name = "buy_price")
     public BigDecimal getBuyPrice() {
         return buyPrice;
     }
-
+    
     public void setBuyPrice(BigDecimal buyPrice) {
         this.buyPrice = buyPrice;
     }
-
+    
     @Basic
     @Column(name = "strike_price")
     public BigDecimal getStrikePrice() {
         return strikePrice;
     }
-
+    
     public void setStrikePrice(BigDecimal strikePrice) {
         this.strikePrice = strikePrice;
     }
-
+    
     @Basic
     @Column(name = "sum")
     public BigDecimal getSum() {
         return sum;
     }
-
+    
     public void setSum(BigDecimal sum) {
         this.sum = sum;
     }
-
+    
     @Basic
     @Column(name = "trend")
     public byte getTrend() {
         return trend;
     }
-
+    
     public void setTrend(byte trend) {
         this.trend = trend;
     }
-
+    
     @Basic
     @Column(name = "cycle")
     public int getCycle() {
         return cycle;
     }
-
+    
     public void setCycle(int cycle) {
         this.cycle = cycle;
     }
-
+    
     @Basic
     @Column(name = "controlled")
     public Byte getControlled() {
         return controlled;
     }
-
+    
     public void setControlled(Byte controlled) {
         this.controlled = controlled;
     }
-
+    
     @Basic
     @Column(name = "create_time")
     public Timestamp getCreateTime() {
         return createTime;
     }
-
+    
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
-
+    
     @Basic
     @Column(name = "update_time")
     public Timestamp getUpdateTime() {
         return updateTime;
     }
-
+    
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
-
+    
     @Basic
     @Column(name = "strike_time")
     public Timestamp getStrikeTime() {
         return strikeTime;
     }
-
+    
     public void setStrikeTime(Timestamp strikeTime) {
         this.strikeTime = strikeTime;
     }
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -166,10 +166,10 @@ public class Order {
                 Objects.equals(updateTime, order.updateTime) &&
                 Objects.equals(strikeTime, order.strikeTime);
     }
-
+    
     @Override
     public int hashCode() {
-
+        
         return Objects.hash(id, userId, forexId, buyPrice, strikePrice, sum, trend, cycle, controlled, createTime, updateTime, strikeTime);
     }
 }

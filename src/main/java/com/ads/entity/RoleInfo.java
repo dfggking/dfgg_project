@@ -6,7 +6,7 @@ import java.util.Objects;
 /**
  * @author dfggking@hotmail.com
  * @version 1.0
- * @date 2017/12/14
+ * @date 2017/12/15
  */
 @Entity
 @Table(name = "role_info", schema = "adsdb", catalog = "")
@@ -14,37 +14,37 @@ public class RoleInfo {
     private String id;
     private String roleName;
     private String userId;
-
+    
     @Id
     @Column(name = "id")
     public String getId() {
         return id;
     }
-
+    
     public void setId(String id) {
         this.id = id;
     }
-
+    
     @Basic
     @Column(name = "role_name")
     public String getRoleName() {
         return roleName;
     }
-
+    
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
-
+    
     @Basic
     @Column(name = "user_id")
     public String getUserId() {
         return userId;
     }
-
+    
     public void setUserId(String userId) {
         this.userId = userId;
     }
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,10 +54,10 @@ public class RoleInfo {
                 Objects.equals(roleName, roleInfo.roleName) &&
                 Objects.equals(userId, roleInfo.userId);
     }
-
+    
     @Override
     public int hashCode() {
-
+        
         return Objects.hash(id, roleName, userId);
     }
 }

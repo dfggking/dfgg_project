@@ -32,20 +32,19 @@ public class DataScanImpl implements DataScan {
     private DataParser dataParser;
 
     /**
-     * http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable.do
+     * http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable.do?classifyId=001
      */
     @Override
     public void zhongfuDataScan() {
         try {
 
 
-            HttpResult httpResult = httpUtil.doPost("http://market.forex.com.cn/zhongfuMarketIndex/findAllPriceAjax" +
-                    ".do");
+            HttpResult httpResult = httpUtil.doPost("http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable.do?classifyId=001");
             int statusCode = 200;
             if (Objects.equals(statusCode, httpResult.getStatusCode())) {
                 String resultJson = httpResult.getContent();
                 dataParser.parserWaiHuiTong(resultJson);
-                LOGGER.info("采集正常");
+//                LOGGER.info("采集正常");
             }
         } catch (IOException e) {
             e.printStackTrace();

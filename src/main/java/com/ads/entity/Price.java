@@ -11,165 +11,200 @@ import java.util.Objects;
 /**
  * @author dfggking@hotmail.com
  * @version 1.0
- * @date 2017/12/14
+ * @date 2017/12/15
  */
 @Entity
 public class Price {
     private String id;
+    private String symbolId;
     private String symbolCode;
-    private BigDecimal lastTrade;
-    private String chg;
+    private String symbolName;
+    private BigDecimal buyPrice;
+    private BigDecimal sellPrice;
+    private BigDecimal pltd;
     private BigDecimal open;
-    private BigDecimal highest;
-    private BigDecimal lowest;
-    private String amplitude;
-    private BigDecimal prevClose;
-    private BigDecimal bid;
-    private BigDecimal ask;
+    private BigDecimal close;
+    private BigDecimal high;
+    private BigDecimal low;
     private Timestamp createdTime;
-
+    private String fromAddress;
+    private String fromName;
+    private BigDecimal ratio;
+    
     @Id
     @Column(name = "id")
     public String getId() {
         return id;
     }
-
+    
     public void setId(String id) {
         this.id = id;
     }
-
+    
+    @Basic
+    @Column(name = "symbol_id")
+    public String getSymbolId() {
+        return symbolId;
+    }
+    
+    public void setSymbolId(String symbolId) {
+        this.symbolId = symbolId;
+    }
+    
     @Basic
     @Column(name = "symbol_code")
     public String getSymbolCode() {
         return symbolCode;
     }
-
+    
     public void setSymbolCode(String symbolCode) {
         this.symbolCode = symbolCode;
     }
-
+    
     @Basic
-    @Column(name = "last_trade")
-    public BigDecimal getLastTrade() {
-        return lastTrade;
+    @Column(name = "symbol_name")
+    public String getSymbolName() {
+        return symbolName;
     }
-
-    public void setLastTrade(BigDecimal lastTrade) {
-        this.lastTrade = lastTrade;
+    
+    public void setSymbolName(String symbolName) {
+        this.symbolName = symbolName;
     }
-
+    
     @Basic
-    @Column(name = "chg")
-    public String getChg() {
-        return chg;
+    @Column(name = "buy_price")
+    public BigDecimal getBuyPrice() {
+        return buyPrice;
     }
-
-    public void setChg(String chg) {
-        this.chg = chg;
+    
+    public void setBuyPrice(BigDecimal buyPrice) {
+        this.buyPrice = buyPrice;
     }
-
+    
+    @Basic
+    @Column(name = "sell_price")
+    public BigDecimal getSellPrice() {
+        return sellPrice;
+    }
+    
+    public void setSellPrice(BigDecimal sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+    
+    @Basic
+    @Column(name = "pltd")
+    public BigDecimal getPltd() {
+        return pltd;
+    }
+    
+    public void setPltd(BigDecimal pltd) {
+        this.pltd = pltd;
+    }
+    
     @Basic
     @Column(name = "open")
     public BigDecimal getOpen() {
         return open;
     }
-
+    
     public void setOpen(BigDecimal open) {
         this.open = open;
     }
-
+    
     @Basic
-    @Column(name = "highest")
-    public BigDecimal getHighest() {
-        return highest;
+    @Column(name = "close")
+    public BigDecimal getClose() {
+        return close;
     }
-
-    public void setHighest(BigDecimal highest) {
-        this.highest = highest;
+    
+    public void setClose(BigDecimal close) {
+        this.close = close;
     }
-
+    
     @Basic
-    @Column(name = "lowest")
-    public BigDecimal getLowest() {
-        return lowest;
+    @Column(name = "high")
+    public BigDecimal getHigh() {
+        return high;
     }
-
-    public void setLowest(BigDecimal lowest) {
-        this.lowest = lowest;
+    
+    public void setHigh(BigDecimal high) {
+        this.high = high;
     }
-
+    
     @Basic
-    @Column(name = "amplitude")
-    public String getAmplitude() {
-        return amplitude;
+    @Column(name = "low")
+    public BigDecimal getLow() {
+        return low;
     }
-
-    public void setAmplitude(String amplitude) {
-        this.amplitude = amplitude;
+    
+    public void setLow(BigDecimal low) {
+        this.low = low;
     }
-
-    @Basic
-    @Column(name = "prev_close")
-    public BigDecimal getPrevClose() {
-        return prevClose;
-    }
-
-    public void setPrevClose(BigDecimal prevClose) {
-        this.prevClose = prevClose;
-    }
-
-    @Basic
-    @Column(name = "bid")
-    public BigDecimal getBid() {
-        return bid;
-    }
-
-    public void setBid(BigDecimal bid) {
-        this.bid = bid;
-    }
-
-    @Basic
-    @Column(name = "ask")
-    public BigDecimal getAsk() {
-        return ask;
-    }
-
-    public void setAsk(BigDecimal ask) {
-        this.ask = ask;
-    }
-
+    
     @Basic
     @Column(name = "created_time")
     public Timestamp getCreatedTime() {
         return createdTime;
     }
-
+    
     public void setCreatedTime(Timestamp createdTime) {
         this.createdTime = createdTime;
     }
-
+    
+    @Basic
+    @Column(name = "from_address")
+    public String getFromAddress() {
+        return fromAddress;
+    }
+    
+    public void setFromAddress(String fromAddress) {
+        this.fromAddress = fromAddress;
+    }
+    
+    @Basic
+    @Column(name = "from_name")
+    public String getFromName() {
+        return fromName;
+    }
+    
+    public void setFromName(String fromName) {
+        this.fromName = fromName;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Price price = (Price) o;
         return Objects.equals(id, price.id) &&
+                Objects.equals(symbolId, price.symbolId) &&
                 Objects.equals(symbolCode, price.symbolCode) &&
-                Objects.equals(lastTrade, price.lastTrade) &&
-                Objects.equals(chg, price.chg) &&
+                Objects.equals(symbolName, price.symbolName) &&
+                Objects.equals(buyPrice, price.buyPrice) &&
+                Objects.equals(sellPrice, price.sellPrice) &&
+                Objects.equals(pltd, price.pltd) &&
                 Objects.equals(open, price.open) &&
-                Objects.equals(highest, price.highest) &&
-                Objects.equals(lowest, price.lowest) &&
-                Objects.equals(amplitude, price.amplitude) &&
-                Objects.equals(prevClose, price.prevClose) &&
-                Objects.equals(bid, price.bid) &&
-                Objects.equals(ask, price.ask) &&
-                Objects.equals(createdTime, price.createdTime);
+                Objects.equals(close, price.close) &&
+                Objects.equals(high, price.high) &&
+                Objects.equals(low, price.low) &&
+                Objects.equals(createdTime, price.createdTime) &&
+                Objects.equals(fromAddress, price.fromAddress) &&
+                Objects.equals(fromName, price.fromName);
     }
-
+    
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, symbolCode, lastTrade, chg, open, highest, lowest, amplitude, prevClose, bid, ask, createdTime);
+        
+        return Objects.hash(id, symbolId, symbolCode, symbolName, buyPrice, sellPrice, pltd, open, close, high, low, createdTime, fromAddress, fromName);
+    }
+    
+    @Basic
+    @Column(name = "ratio")
+    public BigDecimal getRatio() {
+        return ratio;
+    }
+    
+    public void setRatio(BigDecimal ratio) {
+        this.ratio = ratio;
     }
 }

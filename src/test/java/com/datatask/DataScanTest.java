@@ -43,7 +43,8 @@ public class DataScanTest {
     @Test
     public void scanForexList(){
         try {
-            HttpResult httpResult = httpUtil.doPost("http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable.do");
+            HttpResult httpResult = httpUtil.doPost("http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable" +
+                    ".do?classifyId=001");
             int statusCode = 200;
             if (Objects.equals(statusCode, httpResult.getStatusCode())) {
                 String resultJson = httpResult.getContent();
@@ -59,7 +60,7 @@ public class DataScanTest {
                     forex.setSymbolCode((String) entry.get("symbolCode"));
                     forex.setSymbolName((String) entry.get("symbolName"));
                     forex.setEnabled("1");
-                    forex.setCreatedTime(new Timestamp(new Date().getTime()));
+                    forex.setCreatedTime(new Timestamp(System.currentTimeMillis()));
                     list.add(forex);
                 }
                 forexService.addBatch(list);
