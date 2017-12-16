@@ -11,16 +11,15 @@ import java.util.Objects;
 /**
  * @author dfggking@hotmail.com
  * @version 1.0
- * @date 2017/12/15
+ * @date 2017/12/16
  */
 @Entity
 public class Transaction {
     private String id;
     private String userId;
-    private String remark;
-    private Timestamp createTime;
-    private BigDecimal sum;
+    private BigDecimal money;
     private String mode;
+    private Timestamp createTime;
     
     @Id
     @Column(name = "id")
@@ -43,33 +42,13 @@ public class Transaction {
     }
     
     @Basic
-    @Column(name = "remark")
-    public String getRemark() {
-        return remark;
+    @Column(name = "money")
+    public BigDecimal getMoney() {
+        return money;
     }
     
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-    
-    @Basic
-    @Column(name = "create_time")
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
-    
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-    
-    @Basic
-    @Column(name = "sum")
-    public BigDecimal getSum() {
-        return sum;
-    }
-    
-    public void setSum(BigDecimal sum) {
-        this.sum = sum;
+    public void setMoney(BigDecimal money) {
+        this.money = money;
     }
     
     @Basic
@@ -82,6 +61,16 @@ public class Transaction {
         this.mode = mode;
     }
     
+    @Basic
+    @Column(name = "create_time")
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+    
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,15 +78,14 @@ public class Transaction {
         Transaction that = (Transaction) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(userId, that.userId) &&
-                Objects.equals(remark, that.remark) &&
-                Objects.equals(createTime, that.createTime) &&
-                Objects.equals(sum, that.sum) &&
-                Objects.equals(mode, that.mode);
+                Objects.equals(money, that.money) &&
+                Objects.equals(mode, that.mode) &&
+                Objects.equals(createTime, that.createTime);
     }
     
     @Override
     public int hashCode() {
         
-        return Objects.hash(id, userId, remark, createTime, sum, mode);
+        return Objects.hash(id, userId, money, mode, createTime);
     }
 }

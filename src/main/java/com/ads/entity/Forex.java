@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * @author dfggking@hotmail.com
  * @version 1.0
- * @date 2017/12/15
+ * @date 2017/12/16
  */
 @Entity
 public class Forex {
@@ -33,7 +33,7 @@ public class Forex {
     }
     
     @Basic
-    @Column(name = "symbolId")
+    @Column(name = "symbol_Id")
     public String getSymbolId() {
         return symbolId;
     }
@@ -43,7 +43,7 @@ public class Forex {
     }
     
     @Basic
-    @Column(name = "symbolCode")
+    @Column(name = "symbol_code")
     public String getSymbolCode() {
         return symbolCode;
     }
@@ -53,7 +53,7 @@ public class Forex {
     }
     
     @Basic
-    @Column(name = "symbolName")
+    @Column(name = "symbol_name")
     public String getSymbolName() {
         return symbolName;
     }

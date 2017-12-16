@@ -1,13 +1,14 @@
 package com.ads.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 /**
  * @author dfggking@hotmail.com
  * @version 1.0
- * @date 2017/12/15
+ * @date 2017/12/16
  */
 @Entity
 @Table(name = "user_info", schema = "adsdb", catalog = "")
@@ -18,6 +19,7 @@ public class UserInfo {
     private String idcard;
     private String grade;
     private String introducerId;
+    private BigDecimal money;
     private Timestamp createdTime;
     private Timestamp updatedTime;
     
@@ -82,6 +84,16 @@ public class UserInfo {
     }
     
     @Basic
+    @Column(name = "money")
+    public BigDecimal getMoney() {
+        return money;
+    }
+    
+    public void setMoney(BigDecimal money) {
+        this.money = money;
+    }
+    
+    @Basic
     @Column(name = "created_time")
     public Timestamp getCreatedTime() {
         return createdTime;
@@ -112,6 +124,7 @@ public class UserInfo {
                 Objects.equals(idcard, userInfo.idcard) &&
                 Objects.equals(grade, userInfo.grade) &&
                 Objects.equals(introducerId, userInfo.introducerId) &&
+                Objects.equals(money, userInfo.money) &&
                 Objects.equals(createdTime, userInfo.createdTime) &&
                 Objects.equals(updatedTime, userInfo.updatedTime);
     }
@@ -119,6 +132,6 @@ public class UserInfo {
     @Override
     public int hashCode() {
         
-        return Objects.hash(id, userCode, name, idcard, grade, introducerId, createdTime, updatedTime);
+        return Objects.hash(id, userCode, name, idcard, grade, introducerId, money, createdTime, updatedTime);
     }
 }

@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * @author dfggking@hotmail.com
  * @version 1.0
- * @date 2017/12/15
+ * @date 2017/12/16
  */
 @Entity
 public class Order {
@@ -20,10 +20,9 @@ public class Order {
     private String forexId;
     private BigDecimal buyPrice;
     private BigDecimal strikePrice;
-    private BigDecimal sum;
-    private byte trend;
-    private int cycle;
-    private Byte controlled;
+    private BigDecimal money;
+    private String trade;
+    private short cycle;
     private Timestamp createTime;
     private Timestamp updateTime;
     private Timestamp strikeTime;
@@ -79,43 +78,33 @@ public class Order {
     }
     
     @Basic
-    @Column(name = "sum")
-    public BigDecimal getSum() {
-        return sum;
+    @Column(name = "money")
+    public BigDecimal getMoney() {
+        return money;
     }
     
-    public void setSum(BigDecimal sum) {
-        this.sum = sum;
+    public void setMoney(BigDecimal money) {
+        this.money = money;
     }
     
     @Basic
-    @Column(name = "trend")
-    public byte getTrend() {
-        return trend;
+    @Column(name = "trade")
+    public String getTrade() {
+        return trade;
     }
     
-    public void setTrend(byte trend) {
-        this.trend = trend;
+    public void setTrade(String trade) {
+        this.trade = trade;
     }
     
     @Basic
     @Column(name = "cycle")
-    public int getCycle() {
+    public short getCycle() {
         return cycle;
     }
     
-    public void setCycle(int cycle) {
+    public void setCycle(short cycle) {
         this.cycle = cycle;
-    }
-    
-    @Basic
-    @Column(name = "controlled")
-    public Byte getControlled() {
-        return controlled;
-    }
-    
-    public void setControlled(Byte controlled) {
-        this.controlled = controlled;
     }
     
     @Basic
@@ -153,15 +142,14 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Order order = (Order) o;
-        return trend == order.trend &&
-                cycle == order.cycle &&
+        return cycle == order.cycle &&
                 Objects.equals(id, order.id) &&
                 Objects.equals(userId, order.userId) &&
                 Objects.equals(forexId, order.forexId) &&
                 Objects.equals(buyPrice, order.buyPrice) &&
                 Objects.equals(strikePrice, order.strikePrice) &&
-                Objects.equals(sum, order.sum) &&
-                Objects.equals(controlled, order.controlled) &&
+                Objects.equals(money, order.money) &&
+                Objects.equals(trade, order.trade) &&
                 Objects.equals(createTime, order.createTime) &&
                 Objects.equals(updateTime, order.updateTime) &&
                 Objects.equals(strikeTime, order.strikeTime);
@@ -170,6 +158,6 @@ public class Order {
     @Override
     public int hashCode() {
         
-        return Objects.hash(id, userId, forexId, buyPrice, strikePrice, sum, trend, cycle, controlled, createTime, updateTime, strikeTime);
+        return Objects.hash(id, userId, forexId, buyPrice, strikePrice, money, trade, cycle, createTime, updateTime, strikeTime);
     }
 }

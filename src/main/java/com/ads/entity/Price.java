@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * @author dfggking@hotmail.com
  * @version 1.0
- * @date 2017/12/15
+ * @date 2017/12/16
  */
 @Entity
 public class Price {
@@ -22,6 +22,7 @@ public class Price {
     private BigDecimal buyPrice;
     private BigDecimal sellPrice;
     private BigDecimal pltd;
+    private BigDecimal ratio;
     private BigDecimal open;
     private BigDecimal close;
     private BigDecimal high;
@@ -29,7 +30,6 @@ public class Price {
     private Timestamp createdTime;
     private String fromAddress;
     private String fromName;
-    private BigDecimal ratio;
     
     @Id
     @Column(name = "id")
@@ -99,6 +99,16 @@ public class Price {
     
     public void setPltd(BigDecimal pltd) {
         this.pltd = pltd;
+    }
+    
+    @Basic
+    @Column(name = "ratio")
+    public BigDecimal getRatio() {
+        return ratio;
+    }
+    
+    public void setRatio(BigDecimal ratio) {
+        this.ratio = ratio;
     }
     
     @Basic
@@ -183,6 +193,7 @@ public class Price {
                 Objects.equals(buyPrice, price.buyPrice) &&
                 Objects.equals(sellPrice, price.sellPrice) &&
                 Objects.equals(pltd, price.pltd) &&
+                Objects.equals(ratio, price.ratio) &&
                 Objects.equals(open, price.open) &&
                 Objects.equals(close, price.close) &&
                 Objects.equals(high, price.high) &&
@@ -195,16 +206,6 @@ public class Price {
     @Override
     public int hashCode() {
         
-        return Objects.hash(id, symbolId, symbolCode, symbolName, buyPrice, sellPrice, pltd, open, close, high, low, createdTime, fromAddress, fromName);
-    }
-    
-    @Basic
-    @Column(name = "ratio")
-    public BigDecimal getRatio() {
-        return ratio;
-    }
-    
-    public void setRatio(BigDecimal ratio) {
-        this.ratio = ratio;
+        return Objects.hash(id, symbolId, symbolCode, symbolName, buyPrice, sellPrice, pltd, ratio, open, close, high, low, createdTime, fromAddress, fromName);
     }
 }
