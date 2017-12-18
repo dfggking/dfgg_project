@@ -9,7 +9,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-  <title>ADS管理系统</title>
+  <title>ADS超级管理员系统</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
   <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">

@@ -65,6 +65,13 @@
   <context:component-scan base-package="com.ads.datatask"/>
   <context:component-scan base-package="com.ads.controller, com.ads.service"/>
   
+  <!--spring提供的基于Ehcache实现的缓存管理器-->
+  <bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+    <property name="configLocation" value="classpath:ehcache-setting.xml"/>
+  </bean>
+  <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+    <property name="cacheManager" ref="cacheManagerFactory"/>
+  </bean>
   
   <!--加载资源文件-->
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">

@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,7 +39,9 @@ public class RegisterController extends BaseController {
      * 注册发送验证码
      */
     private final static String SEND_CAPTCHA = "/sendCaptcha";
-
+    
+    @Autowired
+    private CaptchaController captchaController;
     @Autowired
     private RegisterService registerService;
 
@@ -54,9 +57,6 @@ public class RegisterController extends BaseController {
             return resultMap;
         }
 
-        // 比较验证码
-
-
         // 手机号是否已存在 存在则提示手机号已存在
         Boolean registeredMobile = registerService.registeredMobile(loginInfo.getMobile());
         if (registeredMobile) {
@@ -67,7 +67,6 @@ public class RegisterController extends BaseController {
 
 
 
-        loginInfo.getPassword();
 
         return null;
     }
@@ -77,8 +76,13 @@ public class RegisterController extends BaseController {
      * @return
      */
     @RequestMapping(value = SEND_CAPTCHA)
-    public Map<String, Object> sendCaptcha(){
-
+    @ResponseBody
+    public Map<String, Object> sendCaptcha(String mobile){
+        captchaController.sendCaptcha(mobile);
+        return null;
+    }
+    
+    public Map<String, Object> validateCaptcha(){
         return null;
     }
 

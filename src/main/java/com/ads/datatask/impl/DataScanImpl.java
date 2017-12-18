@@ -4,17 +4,15 @@ import com.ads.common.http.HttpClientUtil;
 import com.ads.common.http.HttpResult;
 import com.ads.datatask.DataParser;
 import com.ads.datatask.DataScan;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.Cache.ValueWrapper;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -30,6 +28,9 @@ public class DataScanImpl implements DataScan {
     private HttpClientUtil httpUtil;
     @Autowired
     private DataParser dataParser;
+    @Autowired
+    private CacheManager cacheManager;
+    
 
     /**
      * http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable.do?classifyId=001
@@ -37,8 +38,6 @@ public class DataScanImpl implements DataScan {
     @Override
     public void zhongfuDataScan() {
         try {
-
-
             HttpResult httpResult = httpUtil.doPost("http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable.do?classifyId=001");
             int statusCode = 200;
             if (Objects.equals(statusCode, httpResult.getStatusCode())) {
