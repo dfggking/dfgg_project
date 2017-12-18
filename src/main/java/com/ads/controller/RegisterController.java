@@ -6,6 +6,8 @@ import com.ads.service.RegisterService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -39,7 +41,12 @@ public class RegisterController extends BaseController {
      * 注册发送验证码
      */
     private final static String SEND_CAPTCHA = "/sendCaptcha";
-    
+    /**
+     * 验证码校验
+     */
+    private final static String VALIDATE_CAPTCHA = "/validateCaptcha";
+    @Autowired
+    private CacheManager cacheManager;
     @Autowired
     private CaptchaController captchaController;
     @Autowired
@@ -82,8 +89,29 @@ public class RegisterController extends BaseController {
         return null;
     }
     
-    public Map<String, Object> validateCaptcha(){
-        return null;
+    @RequestMapping(value = VALIDATE_CAPTCHA)
+    @ResponseBody
+    public Map<String, Object> validateCaptcha(String mobile, String captcha){
+        Map resultMap = new HashMap(16);
+        // 获取ehcache中的验证码
+        Cache cache = cacheManager.getCache("captchaCache");
+        Cache.ValueWrapper valueWrapper = cache.get(mobile);
+        String cacheCaptcha = valueWrapper.get().toString();
+        if (Objects.nonNull(valueWrapper)) {
+            if (Objects.equals(cacheCaptcha, captcha)) {
+                resultMap.put(MSG, "验证码通过验证");
+                resultMap.put(STATUS, 1);
+                return resultMap;
+            } else {
+                resultMap.put(MSG, "验证码错误");
+                resultMap.put(STATUS, 0);
+                return resultMap;
+            }
+        }else{
+            resultMap.put(MSG, "请发送验证码");
+            resultMap.put(STATUS, 0);
+            return resultMap;
+        }
     }
 
 }
