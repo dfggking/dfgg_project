@@ -1,6 +1,8 @@
 package com.ads.controller;
 
 import com.ads.common.base.BaseController;
+import com.ads.common.token.TokenMgr;
+import com.ads.common.util.UUIDUtils;
 import com.ads.entity.LoginInfo;
 import com.ads.service.RegisterService;
 import org.apache.log4j.LogManager;
@@ -36,7 +38,7 @@ public class RegisterController extends BaseController {
     /**
      * 注册请求
      */
-    private final static String TO = "/to";
+    private final static String SUBMIT = "/submit";
     /**
      * 注册发送验证码
      */
@@ -52,8 +54,8 @@ public class RegisterController extends BaseController {
     @Autowired
     private RegisterService registerService;
 
-    @RequestMapping(value = TO)
-    public Map<String, Object> toRegister(LoginInfo loginInfo, String captcha,
+    @RequestMapping(value = SUBMIT)
+    public Map<String, Object> submit(LoginInfo loginInfo, String captcha,
                                           HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> resultMap = new HashMap<String, Object>(16);
 
@@ -71,11 +73,14 @@ public class RegisterController extends BaseController {
             resultMap.put(MSG, "手机号已存在");
             return resultMap;
         }
-
-
-
-
-        return null;
+    
+        String userId = UUIDUtils.getUUID();
+        String token = TokenMgr.createJWT(userId);
+        
+        resultMap.put(STATUS, 1);
+        resultMap.put(MSG, "注册成功");
+        resultMap.put("token", token);
+        return resultMap;
     }
 
     /**
@@ -85,8 +90,20 @@ public class RegisterController extends BaseController {
     @RequestMapping(value = SEND_CAPTCHA)
     @ResponseBody
     public Map<String, Object> sendCaptcha(String mobile){
-        captchaController.sendCaptcha(mobile);
-        return null;
+        Map resultMap = new HashMap(16);
+        Map sendResult = captchaController.sendCaptcha(mobile);
+        int statusCode = 200;
+        int sendStatusCode = (int) sendResult.get("status");
+        
+        if (Objects.equals(statusCode, sendStatusCode)) {
+            resultMap.put(MSG, "验证码已发送");
+            resultMap.put(STATUS, 1);
+            return resultMap;
+        }
+        resultMap.put(MSG, "验证码发送失败");
+        resultMap.put(INFO, sendResult);
+        resultMap.put(STATUS, 0);
+        return resultMap;
     }
     
     @RequestMapping(value = VALIDATE_CAPTCHA)
@@ -113,5 +130,4 @@ public class RegisterController extends BaseController {
             return resultMap;
         }
     }
-
 }

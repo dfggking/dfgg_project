@@ -18,10 +18,19 @@ import java.util.Map;
 public abstract class BaseController {
     private final static Logger logger = LogManager.getLogger(BaseController.class);
     
-    /** 返回结果状态值， 0表示失败， 1表示成功 */
+    /**
+     * 返回结果状态值 0表示失败 1表示成功
+     * */
     protected final static String STATUS = "status";
-    /** 返回状态说明， status为0时，info返回错误原因，否则返回OK */
+    /**
+     * 返回状态说明 info返回错误原因 否则返回OK
+     */
+    protected final static String INFO = "info";
+    /**
+     * 返回提示信息 用于展示
+     */
     protected final static String MSG = "msg";
+    
 //    protected final static Map<String, Object> BODY = new HashMap<>();
     /** 状态码， 1000表示正确， 详情参阅info状态表 */
 //    protected final static String INFO_CODE = "infocode";
