@@ -1,6 +1,7 @@
 package com.ads.service;
 
 
+import com.ads.entity.LoginInfo;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +18,11 @@ public interface RegisterService {
      * @return
      */
     Boolean registeredMobile(String mobile);
+    
+    /**
+     * 添加新用户
+     * @param loginInfo
+     * @return
+     */
+    Boolean addUser(LoginInfo loginInfo);
 }

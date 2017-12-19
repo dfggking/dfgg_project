@@ -1,6 +1,7 @@
 package com.ads.service.impl;
 
 import com.ads.common.base.BaseService;
+import com.ads.entity.LoginInfo;
 import com.ads.service.LoginService;
 import com.ads.service.RegisterService;
 import org.springframework.stereotype.Service;
@@ -24,43 +25,17 @@ public class RegisterServiceImpl extends BaseService implements RegisterService 
     public Boolean registeredMobile(String mobile) {
         return null;
     }
-
-//    /**
-//     * 获取用户信息
-//     *
-//     * @param idWechat
-//     * @return Users
-//     */
-//    @Override
-//    public Users getUser(String idWechat) {
-//        String hql = "from Users where idWechat = ?";
-//        List<Users> list = (List<Users>) hibernateTemplate.find(hql, new Object[]{idWechat});
-//        if(list.size() > 0){
-//            return list.get(0);
-//        }else{
-//            return null;
-//        }
-//    }
-//
-//    /**
-//     * 注册
-//     *
-//     * @param user
-//     * @return Boolean
-//     */
-//    @Override
-//    public Boolean signIn(Users user) {
-//        return null;
-//    }
-//
-//    /**
-//     * 登录
-//     *
-//     * @param users
-//     * @return Boolean
-//     */
-//    @Override
-//    public Boolean login(Users users) {
-//        return null;
-//    }
+    
+    /**
+     * 添加新用户
+     *
+     * @param loginInfo
+     * @return
+     */
+    @Override
+    public Boolean addUser(LoginInfo loginInfo) {
+        return null;
+    }
+    
+    
 }

@@ -75,8 +75,9 @@ public class RegisterController extends BaseController {
         }
     
         String userId = UUIDUtils.getUUID();
+        loginInfo.setUserId(userId);
+        registerService.addUser(loginInfo);
         String token = TokenMgr.createJWT(userId);
-        
         resultMap.put(STATUS, 1);
         resultMap.put(MSG, "注册成功");
         resultMap.put("token", token);

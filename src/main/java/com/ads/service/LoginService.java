@@ -1,5 +1,9 @@
 package com.ads.service;
 
+import com.ads.entity.LoginInfo;
+
+import java.util.Map;
+
 /**
  * 登录 Service
  * @author dfggking@hotmail.com
@@ -7,26 +11,20 @@ package com.ads.service;
  * @date 2017-06-28
  */
 public interface LoginService {
-//    /**
-//     * 获取用户信息
-//     * @param idwechat
-//     * @return Users
-//     */
-//    Users getUser(String idwechat);
-//
-//    /**
-//     * 注册
-//     * @param user
-//     * @return Boolean
-//     */
-//    Boolean signIn(Users user);
-//
-//    /**
-//     * 登录
-//     * @param users
-//     * @return Boolean
-//     */
-//    Boolean login(Users users);
-//
+    
+    /**
+     * 手机号是否存在
+     * @param mobile
+     * @return
+     */
+    LoginInfo existMobile(String mobile);
+    
+    /**
+     * 根据手机号和密码获取登录信息
+     * @param mobile
+     * @param pwd
+     * @return
+     */
+    Map<String, Object> getLoginInfo(String mobile, String pwd);
 
 }

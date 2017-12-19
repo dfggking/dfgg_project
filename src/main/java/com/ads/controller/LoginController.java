@@ -2,6 +2,8 @@ package com.ads.controller;
 
 import com.ads.common.base.BaseController;
 import com.ads.common.token.TokenMgr;
+import com.ads.common.util.Md5Encoder;
+import com.ads.entity.LoginInfo;
 import com.ads.service.LoginService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -15,6 +17,8 @@ import sun.tools.jstat.Token;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,21 +66,44 @@ public class LoginController extends BaseController {
         return mv;
     }
     
-    
     @RequestMapping(value=LOGIN)
     @ResponseBody
     public Map<String, Object> login(HttpServletRequest request, HttpServletResponse response){
         Map<String, Object> resultMap = new HashMap<String, Object>(16);
-        
         String mobile = request.getParameter("mobile");
         String pwd = request.getParameter("pwd");
+        
+        // 首先 参数非空验证
         if (Objects.nonNull(mobile) && Objects.nonNull(pwd)) {
             
-            
-            TokenMgr.createJWT("123456");
+            // 手机号是否已存在
+            LoginInfo loginInfo = loginService.existMobile(mobile);
+            if (Objects.nonNull(loginInfo.getMobile())) {
+                try {
+                    Boolean pwdFlag = Md5Encoder.validPassword(pwd, loginInfo.getPassword());
+                    if (pwdFlag) {
+                        String token = TokenMgr.createJWT(loginInfo.getUserId());
+                        resultMap.put(MSG, "登录成功");
+                        resultMap.put("token", token);
+                        resultMap.put(STATUS, 1);
+                    }else{ // 密码错误
+                        resultMap.put(MSG, "密码错误");
+                        resultMap.put(STATUS, 0);
+                    }
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }else{
+                resultMap.put(MSG, "手机号不存在");
+                resultMap.put(STATUS, 0);
+            }
+        }else{
+            resultMap.put(MSG, "手机号和密码不能为空");
+            resultMap.put(STATUS, 0);
         }
-
-        return null;
+        return resultMap;
     }
 
 }
