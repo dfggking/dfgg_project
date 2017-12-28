@@ -12,17 +12,12 @@ import org.springframework.stereotype.Service;
  */
 public interface RegisterService {
 
-    /**
-     * 手机是否已经注册
-     * @param mobile
-     * @return
-     */
-    Boolean registeredMobile(String mobile);
     
     /**
      * 添加新用户
      * @param loginInfo
+     * @param inviteCode
      * @return
      */
-    Boolean addUser(LoginInfo loginInfo);
+    Boolean addUser(LoginInfo loginInfo, String inviteCode);
 }

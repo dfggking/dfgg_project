@@ -1,6 +1,7 @@
 package com.ads.service;
 
 import com.ads.entity.LoginInfo;
+import org.springframework.stereotype.Service;
 
 /**
  * @author dfggking@hotmail.com
@@ -13,5 +14,13 @@ public interface LoginInfoService {
      * @param mobile
      * @return
      */
-    LoginInfo existMobile(String mobile);
+    Boolean existMobile(String mobile);
+    
+    /**
+     * 重置密码
+     * @param mobile
+     * @param md5Pwd
+     * @return
+     */
+    Boolean resetPwd(String mobile, String md5Pwd);
 }

@@ -49,7 +49,7 @@ public class CaptchaController extends BaseController {
     public Map<String, Object> sendCaptcha(String mobile) {
         Map resultMap = new HashMap(16);
         Random random = new Random();
-        int captcha = random.nextInt(10000);
+        int captcha = random.nextInt(8999) + 1000;
         String url = "http://utf8.api.smschinese.cn/";
         String smsText = "验证码：" + captcha;
         Map<String, String> params = new HashMap<String, String>(16);
