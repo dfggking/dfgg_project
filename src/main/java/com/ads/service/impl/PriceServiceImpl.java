@@ -17,15 +17,20 @@ import java.util.List;
  */
 @Service
 public class PriceServiceImpl extends BaseService implements PriceService {
+    
     private final static Logger LOGGER = LogManager.getLogger(PriceServiceImpl.class);
+    
+    
+    
     /**
      * 批量添加
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addBatch(List<Price> list) {
-        for (Price p : list) {
-            hibernateTemplate.save(p);
-        }
+    
+//        for (Price p : list) {
+//            hibernateTemplate.save(p);
+//        }
     }
 }

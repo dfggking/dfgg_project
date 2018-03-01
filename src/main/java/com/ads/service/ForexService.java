@@ -13,6 +13,11 @@ import java.util.List;
 public interface ForexService {
     
     /**
+     * zhongnfuMarket 用于ADS数据采集
+     */
+    void zfMarket();
+    
+    /**
      * 批量增加 外汇信息
      * @param list
      */

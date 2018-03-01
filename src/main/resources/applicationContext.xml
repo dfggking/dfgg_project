@@ -83,8 +83,10 @@
     </property>
   </bean>
   
-  <!--引入httpclient配置文件-->
+  <!--httpclient配置文件-->
   <import resource="spring-httpclient.xml"/>
-  <!--引入quartz配置文件-->
+  <!--quartz配置文件-->
   <import resource="spring-quartz.xml"/>
+  <!--Redis配置文件-->
+  <import resource="spring-jedis.xml"/>
 </beans>

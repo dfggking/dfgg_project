@@ -1,7 +1,6 @@
 package com.ads.common.token;
 
 import com.ads.Constant;
-import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -30,7 +29,6 @@ public class TokenMgr {
      * 签发JWT
      * @param subject
      * @return
-     * @throws Base64DecodingException
      */
     public static String createJWT(String subject) {
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;

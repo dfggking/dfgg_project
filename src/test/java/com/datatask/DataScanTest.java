@@ -38,7 +38,10 @@ public class DataScanTest {
         ds.zhongfuDataScan();
     }
     
-    
+    @Test
+    public void testZfmarket(){
+        String result = ds.zhongfuMarketDataScan();
+    }
     
     @Test
     public void scanForexList(){
@@ -64,10 +67,14 @@ public class DataScanTest {
                     list.add(forex);
                 }
                 forexService.addBatch(list);
-                
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    @Test
+    public void testBitkanDataScan(){
+        ds.bitkanDataScan();
     }
 }

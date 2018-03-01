@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+  <description>Redis缓存配置</description>
+  
+  <!--jedis shard池配置-->
+  <bean id="sharedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
+  
+    <constructor-arg index="0" ref="jedisPoolConfig"/>
+    <!--<constructor-arg index="1">-->
+      <!--<list>-->
+        <!--<ref bean="jedis.shardInfo.default"></ref>-->
+      <!--</list>-->
+    <!--</constructor-arg>-->
+  </bean>
+  
+  <!--jedis连接池配置-->
+  <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+    <property name="maxTotal" value="100"/>
+    <property name="maxIdle" value="20"/>
+    <property name="maxWaitMillis" value="5000"/>
+    <property name="testOnBorrow" value="true"/>
+  </bean>
+  
+  <!--<bean id="jedis.shardInfo.default" class="redis.clients.jedis.JedisShardInfo">-->
+    <!--<constructor-arg index="0" value="localhost"/>-->
+    <!--<constructor-arg index="1" type="int" value="6379"/>-->
+    <!--<constructor-arg index="2" type="java.lang.String" value="localhost"/>-->
+  <!--</bean>-->
+</beans>

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +62,25 @@ public class DataParserImpl implements DataParser {
         }
         priceService.addBatch(list);
     }
-
-
+    
+    /**
+     * 币看 数据解析
+     *
+     * @param content 采集内容
+     */
+    @Override
+    public Map<String, Object> parserBikan(String type, String content, int index) {
+        JSONObject dataJsonObject = JSON.parseObject(content);
+        JSONObject data = (JSONObject) dataJsonObject.get("data");
+        JSONArray marketCoins = data.getJSONArray("marketCoins");
+        Map<String, Object> forex = (Map<String, Object>) marketCoins.get(index);
+        JSONArray forexPrice = (JSONArray) forex.get("price");
+        JSONArray price = (JSONArray) forexPrice.get(0);
+        
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put(type, price.get(1));
+        return resultMap;
+    }
+    
+    
 }

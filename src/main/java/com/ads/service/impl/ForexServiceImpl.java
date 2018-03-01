@@ -18,6 +18,15 @@ import java.util.List;
 @Service
 public class ForexServiceImpl extends BaseService implements ForexService {
     private final static Logger LOGGER = LogManager.getLogger(ForexServiceImpl.class);
+    
+    /**
+     * zhongnfuMarket 用于ADS数据采集
+     */
+    @Override
+    public void zfMarket() {
+    
+    }
+    
     /**
      * 批量增加 外汇信息
      * @param list

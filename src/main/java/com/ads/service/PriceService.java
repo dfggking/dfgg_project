@@ -14,6 +14,7 @@ public interface PriceService {
 
     /**
      * 批量添加
+     * @param list
      */
     void addBatch(List<Price> list);
 }

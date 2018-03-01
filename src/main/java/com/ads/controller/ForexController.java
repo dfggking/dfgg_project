@@ -1,6 +1,7 @@
 package com.ads.controller;
 
 import com.ads.common.base.BaseController;
+import com.ads.datatask.DataScan;
 import com.ads.service.ForexService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,14 @@ import java.util.Map;
 public class ForexController extends BaseController {
     private final static Logger LOGGER = Logger.getLogger(ForexController.class);
     /**
+     * 外汇网站数据接口
+     */
+    private final static String ZFMARKET_FOREX_DATA = "zfMarket";
+    /**
+     * 外汇网站BTC接口
+     */
+    private final static String BTC_FOREX_DATA = "btcMarket";
+    /**
      * 最新外汇价格信息
      */
     private final static String REAL_TIME_FOREX = "realTimeForex";
@@ -31,6 +40,28 @@ public class ForexController extends BaseController {
     
     @Autowired
     private ForexService forexService;
+    @Autowired
+    private DataScan ds;
+    
+    /**
+     * 外汇网站数据接口
+     * @return
+     */
+    @RequestMapping(value = ZFMARKET_FOREX_DATA)
+    @ResponseBody
+    public Map zfMarket(){
+        Map resultMap = new HashMap(16);
+        resultMap.put("result", ds.zhongfuMarketDataScan());
+        return resultMap;
+    }
+    
+    @RequestMapping(value = BTC_FOREX_DATA)
+    @ResponseBody
+    public Map btcMarket() {
+        Map resultMap = new HashMap(16);
+        resultMap.put("result", ds.bitkanDataScan());
+        return resultMap;
+    }
     
     /**
      * 获取最新外汇价格
@@ -40,9 +71,6 @@ public class ForexController extends BaseController {
     @ResponseBody
     public Map realTimeForex(){
         Map resultMap = new HashMap(16);
-        
-//        forexService.getRealTimeForex();
-        
         return resultMap;
     }
 }

@@ -16,11 +16,11 @@
   
   
   <!--外汇通 trigger 触发器-->
-  <bean id="whtDataScanTaskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-    <property name="jobDetail" ref="whtDataScanTaskJob"/>
-    <property name="startDelay" value="3000"/>
-    <property name="repeatInterval" value="3000"/><!--3秒调度一次-->
-  </bean>
+  <!--<bean id="whtDataScanTaskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
+    <!--<property name="jobDetail" ref="whtDataScanTaskJob"/>-->
+    <!--<property name="startDelay" value="3000"/>-->
+    <!--<property name="repeatInterval" value="3000"/>&lt;!&ndash;3秒调度一次&ndash;&gt;-->
+  <!--</bean>-->
   
   
   
