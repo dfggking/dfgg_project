@@ -3,6 +3,7 @@ package com.ads.service;
 import com.ads.entity.Forex;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 外汇表service
@@ -11,6 +12,12 @@ import java.util.List;
  * @date 2017/12/15
  */
 public interface ForexService {
+    
+    /**
+     * 获取所有外汇信息
+     * @return List
+     */
+    List getAllForex();
     
     /**
      * zhongnfuMarket 用于ADS数据采集

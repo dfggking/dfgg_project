@@ -1,5 +1,6 @@
 package com.ads.datatask.impl;
 
+import com.ads.common.redis.RedisDataSource;
 import com.ads.common.util.UUIDUtils;
 import com.ads.datatask.DataParser;
 import com.ads.entity.Price;
@@ -11,6 +12,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.ShardedJedis;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -28,20 +30,34 @@ import java.util.Map;
 public class DataParserImpl implements DataParser {
 
     private final static Logger LOGGER = LogManager.getLogger(DataParserImpl.class);
-
+    
+    @Autowired
+    private RedisDataSource redisDataSource;
     @Autowired
     private PriceService priceService;
-
+    
+    /**
+     * 外汇通 数据解析
+     * @param content
+     */
+    @Override
+    public void parseZhongfuMarket(String content) {
+    
+    }
+    
     /**
      * 外汇通 数据解析
      */
     @Override
     public void parserWaiHuiTong(String content) {
         JSONObject dataJsonObject = JSON.parseObject(content);
+    
         JSONArray dataList = dataJsonObject.getJSONArray("list");
         List<Price> list = new ArrayList<>();
+        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
         for (Object entry : dataList) {
             Map<String, String> forex = (Map<String, String>)entry;
+            
             Price price = new Price();
             price.setId(UUIDUtils.getUUID());
             price.setSymbolCode(forex.get("symbolCode"));
@@ -58,9 +74,13 @@ public class DataParserImpl implements DataParser {
             price.setCreatedTime(new Timestamp(System.currentTimeMillis()));
             price.setFromAddress("外汇通");
             price.setFromName("外汇通");
+            
+            shardedJedis.hmset(forex.get("symbolCode"), forex);
+//            shardedJedis.hmget(forex.get("symbolCode"));
             list.add(price);
         }
-        priceService.addBatch(list);
+        
+//        priceService.addBatch(list);
     }
     
     /**

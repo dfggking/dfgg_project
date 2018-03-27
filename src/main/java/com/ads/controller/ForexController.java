@@ -51,7 +51,7 @@ public class ForexController extends BaseController {
     @ResponseBody
     public Map zfMarket(){
         Map resultMap = new HashMap(16);
-        resultMap.put("result", ds.zhongfuMarketDataScan());
+//        resultMap.put("result", ds.zhongfuMarket());
         return resultMap;
     }
     
@@ -59,7 +59,7 @@ public class ForexController extends BaseController {
     @ResponseBody
     public Map btcMarket() {
         Map resultMap = new HashMap(16);
-        resultMap.put("result", ds.bitkanDataScan());
+        resultMap.put("result", ds.bitkan());
         return resultMap;
     }
     

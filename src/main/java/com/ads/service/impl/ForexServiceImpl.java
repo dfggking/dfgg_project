@@ -5,10 +5,12 @@ import com.ads.entity.Forex;
 import com.ads.service.ForexService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author dfggking@hotmail.com
@@ -18,6 +20,16 @@ import java.util.List;
 @Service
 public class ForexServiceImpl extends BaseService implements ForexService {
     private final static Logger LOGGER = LogManager.getLogger(ForexServiceImpl.class);
+    
+    /**
+     * 获取所有外汇信息
+     * @return List
+     */
+    @Override
+    public List getAllForex() {
+//        hibernateTemplate
+        return null;
+    }
     
     /**
      * zhongnfuMarket 用于ADS数据采集

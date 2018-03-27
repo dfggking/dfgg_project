@@ -12,20 +12,24 @@ import java.util.Map;
 public interface DataScan {
     
     /**
-     * 中福ADS 数据采集接口
+     * 中福ADS 数据接口
      * url http://market.forex.com.cn/zhongfuMarketIndex/findAllPriceAjax.do
      */
-    String zhongfuMarketDataScan();
+    void zhongfuMarket();
     
     /**
+     * 来自网站request URL
      * website http://market.forex.com.cn
      * url http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable.do
      */
-    void zhongfuDataScan();
+    void zhongfu();
     
     /**
+     * bitkan网站request URL
      * website http://bitkan.com/price/
      * url http://bitkan.com/price/w_price?categoryId=***
      */
-    List<Map<String, Object>> bitkanDataScan();
+    List<Map<String, Object>> bitkan();
+    
+    
 }

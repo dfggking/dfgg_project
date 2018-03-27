@@ -27,40 +27,38 @@ public class DataScanImpl implements DataScan {
     private HttpClientUtil httpUtil;
     @Autowired
     private DataParser dataParser;
-    @Autowired
-    private CacheManager cacheManager;
     
     /**
      * 中福ADS 数据采集接口
      * url http://market.forex.com.cn/zhongfuMarketIndex/findAllPriceAjax.do
      */
     @Override
-    public String zhongfuMarketDataScan() {
+    public void zhongfuMarket() {
         try {
             HttpResult httpResult = httpUtil.doPost("http://market.forex.com.cn/zhongfuMarketIndex/findAllPriceAjax.do");
             int statusCode = 200;
             if (Objects.equals(statusCode, httpResult.getStatusCode())) {
                 String resultJson = httpResult.getContent();
+                // 解析数据并持久化到Redis
+                dataParser.parseZhongfuMarket(resultJson);
                 LOGGER.info("zhongfuMarketDataScan采集正常");
-                
-                return resultJson;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "接口异常";
     }
     
     /**
      * http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable.do?classifyId=001
      */
     @Override
-    public void zhongfuDataScan() {
+    public void zhongfu() {
         try {
             HttpResult httpResult = httpUtil.doPost("http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable.do?classifyId=001");
             int statusCode = 200;
             if (Objects.equals(statusCode, httpResult.getStatusCode())) {
                 String resultJson = httpResult.getContent();
+                // 解析数据并持久化到Redis
                 dataParser.parserWaiHuiTong(resultJson);
                 LOGGER.info("zhongfuDataScan采集正常");
             }
@@ -74,7 +72,7 @@ public class DataScanImpl implements DataScan {
      * url http://bitkan.com/price/w_price?categoryId=***
      */
     @Override
-    public List<Map<String, Object>> bitkanDataScan() {
+    public List<Map<String, Object>> bitkan() {
         try {
             /*
              * 待采集币种
@@ -87,21 +85,21 @@ public class DataScanImpl implements DataScan {
             int statusCode1 = 200;
             if (Objects.equals(statusCode1, httpResult1.getStatusCode())) {
                 String resultJson = httpResult1.getContent();
-                result.add(dataParser.parserBikan("btc", resultJson, 37));
+                result.add(dataParser.parserBikan("btc", resultJson, 0));
             }
             String param2 = "{\"categoryId\":\"ltc\"}";
             HttpResult httpResult2 = httpUtil.doPostJson("http://bitkan.com/price/w_price", param2);
             int statusCode2 = 200;
             if (Objects.equals(statusCode2, httpResult2.getStatusCode())) {
                 String resultJson = httpResult2.getContent();
-                result.add(dataParser.parserBikan("ltc", resultJson, 31));
+                result.add(dataParser.parserBikan("ltc", resultJson, 1));
             }
             String param3 = "{\"categoryId\":\"etc\"}";
             HttpResult httpResult3 = httpUtil.doPostJson("http://bitkan.com/price/w_price", param3);
             int statusCode = 200;
             if (Objects.equals(statusCode, httpResult3.getStatusCode())) {
                 String resultJson = httpResult3.getContent();
-                result.add(dataParser.parserBikan("etc", resultJson, 29));
+                result.add(dataParser.parserBikan("etc", resultJson, 6));
             }
             LOGGER.info("parserBikan采集正常");
             return result;

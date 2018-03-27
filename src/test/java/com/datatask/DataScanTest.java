@@ -29,52 +29,60 @@ public class DataScanTest {
     @Autowired
     private HttpClientUtil httpUtil;
     @Autowired
-    private DataScan ds;
+    private DataScan dataScan;
     @Autowired
     private ForexService forexService;
     
-    @Test
-    public void zhongfuParser(){
-        ds.zhongfuDataScan();
-    }
-    
+//    @Test
+//    public void zhongfuParser(){
+//        ds.zhongfuDataScan();
+//    }
+//
     @Test
     public void testZfmarket(){
-        String result = ds.zhongfuMarketDataScan();
+        dataScan.zhongfuMarket();
     }
     
     @Test
-    public void scanForexList(){
-        try {
-            HttpResult httpResult = httpUtil.doPost("http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable" +
-                    ".do?classifyId=001");
-            int statusCode = 200;
-            if (Objects.equals(statusCode, httpResult.getStatusCode())) {
-                String resultJson = httpResult.getContent();
-    
-                JSONObject json = JSON.parseObject(resultJson);
-    
-                List<Map<String, Object>> forexList = (List<Map<String, Object>>) json.get("list");
-                List<Forex> list = new ArrayList<>();
-                for (Map<String, Object> entry : forexList) {
-                    Forex forex = new Forex();
-                    forex.setId(UUIDUtils.getUUID());
-                    forex.setSymbolId((String) entry.get("symbolId"));
-                    forex.setSymbolCode((String) entry.get("symbolCode"));
-                    forex.setSymbolName((String) entry.get("symbolName"));
-                    forex.setEnabled("1");
-                    forex.setCreatedTime(new Timestamp(System.currentTimeMillis()));
-                    list.add(forex);
-                }
-                forexService.addBatch(list);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void testZhongfu(){
+        dataScan.zhongfu();
     }
     
-    @Test
-    public void testBitkanDataScan(){
-        ds.bitkanDataScan();
-    }
+    /**
+     * 注：不要执行，该方法为将外汇数据采集到外汇表中否则会重复
+     */
+//    @Test
+//    public void scanForexList(){
+//        try {
+//            HttpResult httpResult = httpUtil.doPost("http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable" +
+//                    ".do?classifyId=001");
+//            int statusCode = 200;
+//            if (Objects.equals(statusCode, httpResult.getStatusCode())) {
+//                String resultJson = httpResult.getContent();
+//
+//                JSONObject json = JSON.parseObject(resultJson);
+//
+//                List<Map<String, Object>> forexList = (List<Map<String, Object>>) json.get("list");
+//                List<Forex> list = new ArrayList<>();
+//                for (Map<String, Object> entry : forexList) {
+//                    Forex forex = new Forex();
+//                    forex.setId(UUIDUtils.getUUID());
+//                    forex.setSymbolId((String) entry.get("symbolId"));
+//                    forex.setSymbolCode((String) entry.get("symbolCode"));
+//                    forex.setSymbolName((String) entry.get("symbolName"));
+//                    forex.setEnabled("1");
+//                    forex.setCreatedTime(new Timestamp(System.currentTimeMillis()));
+//                    list.add(forex);
+//                }
+//                forexService.addBatch(list);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+//    @Test
+//    public void testBitkanDataScan(){
+//        ds.bitkanDataScan();
+//    }
 }

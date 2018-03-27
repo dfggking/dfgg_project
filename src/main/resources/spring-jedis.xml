@@ -5,14 +5,13 @@
   <description>Redis缓存配置</description>
   
   <!--jedis shard池配置-->
-  <bean id="sharedJedisPool" class="redis.clients.jedis.ShardedJedisPool">
-  
+  <bean id="shardedJedisPool" class="redis.clients.jedis.ShardedJedisPool" scope="singleton">
     <constructor-arg index="0" ref="jedisPoolConfig"/>
-    <!--<constructor-arg index="1">-->
-      <!--<list>-->
-        <!--<ref bean="jedis.shardInfo.default"></ref>-->
-      <!--</list>-->
-    <!--</constructor-arg>-->
+    <constructor-arg index="1">
+      <list>
+        <ref bean="jedis.shardInfo.default"></ref>
+      </list>
+    </constructor-arg>
   </bean>
   
   <!--jedis连接池配置-->
@@ -23,9 +22,9 @@
     <property name="testOnBorrow" value="true"/>
   </bean>
   
-  <!--<bean id="jedis.shardInfo.default" class="redis.clients.jedis.JedisShardInfo">-->
-    <!--<constructor-arg index="0" value="localhost"/>-->
-    <!--<constructor-arg index="1" type="int" value="6379"/>-->
-    <!--<constructor-arg index="2" type="java.lang.String" value="localhost"/>-->
-  <!--</bean>-->
+  <bean id="jedis.shardInfo.default" class="redis.clients.jedis.JedisShardInfo">
+    <constructor-arg index="0" value="localhost"/>
+    <constructor-arg index="1" type="int" value="6379"/>
+    <constructor-arg index="2" type="java.lang.String" value="localhost"/>
+  </bean>
 </beans>
