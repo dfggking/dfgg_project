@@ -33,20 +33,25 @@ public class DataScanTest {
     @Autowired
     private ForexService forexService;
     
-//    @Test
-//    public void zhongfuParser(){
-//        ds.zhongfuDataScan();
-//    }
-//
+    @Test
+    public void sinaForex(){
+        dataScan.sinaForex();
+    }
+    
+    @Test
+    public void bikanBTC(){
+        dataScan.bitkanBTC();
+    }
+    
     @Test
     public void testZfmarket(){
         dataScan.zhongfuMarket();
     }
     
-    @Test
-    public void testZhongfu(){
-        dataScan.zhongfu();
-    }
+//    @Test
+//    public void testZhongfu(){
+//        dataScan.zhongfu();
+//    }
     
     /**
      * 注：不要执行，该方法为将外汇数据采集到外汇表中否则会重复

@@ -8,6 +8,7 @@ import com.ads.service.PriceService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,7 @@ import redis.clients.jedis.ShardedJedis;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author dfggking@hotmail.com
@@ -35,6 +33,60 @@ public class DataParserImpl implements DataParser {
     private RedisDataSource redisDataSource;
     @Autowired
     private PriceService priceService;
+    
+    /**
+     * 解析sina采集的数据
+     * @param result
+     */
+    @Override
+    public void parseSina(String result) {
+        // 去掉最后一个因split而生成的空字符串
+        String semicolon = result.substring(result.length() - 2, result.length() - 1);
+        String semicolonType = ";";
+        if (Objects.equals(semicolonType, semicolon)) {
+            String[] items = result.substring(0, result.length() - 1).split(";");
+            String[] dataItems = Arrays.copyOf(items, items.length - 1);
+            Map<String, String> itemMap = new HashMap(16);
+            ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+            for (String item : dataItems) {
+//                System.out.println(item);
+                String itemA = item.substring(12, item.length() - 1);
+                String[] itemAArray = itemA.split("=\"");
+                // 如果能拆分出key/value才存
+                if(itemAArray.length >= 2){
+                    String key = itemAArray[0];
+                    String value = itemAArray[1];
+                    if (StringUtils.isNotBlank(key) && StringUtils.isNotBlank(value)) {
+                        String[] element = itemAArray[1].split(",");
+                        itemMap.put(itemAArray[0], element[1]);
+                    }
+                }
+            }
+            // 入 Redis
+            shardedJedis.hmset("sinaForex", itemMap);
+            // 入 DB
+//            priceService.addBatch();
+        }
+    }
+    
+    /**
+     * 币看 数据解析
+     * @param content 采集内容
+     */
+    @Override
+    public void parserBikan(String type, String content, int index) {
+        JSONObject dataJsonObject = JSON.parseObject(content);
+        JSONObject data = (JSONObject) dataJsonObject.get("data");
+        JSONArray marketCoins = data.getJSONArray("marketCoins");
+        Map<String, Object> forex = (Map<String, Object>) marketCoins.get(index);
+        JSONArray forexPrice = (JSONArray) forex.get("price");
+        JSONArray price = (JSONArray) forexPrice.get(0);
+        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put(type, price.get(1).toString());
+        shardedJedis.hmset("bikanBTC", resultMap);
+        
+    }
     
     /**
      * 外汇通 数据解析
@@ -75,7 +127,7 @@ public class DataParserImpl implements DataParser {
             price.setFromAddress("外汇通");
             price.setFromName("外汇通");
             
-            shardedJedis.hmset(forex.get("symbolCode"), forex);
+//            shardedJedis.hmset(forex.get("symbolCode"), forex);
 //            shardedJedis.hmget(forex.get("symbolCode"));
             list.add(price);
         }
@@ -83,24 +135,7 @@ public class DataParserImpl implements DataParser {
 //        priceService.addBatch(list);
     }
     
-    /**
-     * 币看 数据解析
-     *
-     * @param content 采集内容
-     */
-    @Override
-    public Map<String, Object> parserBikan(String type, String content, int index) {
-        JSONObject dataJsonObject = JSON.parseObject(content);
-        JSONObject data = (JSONObject) dataJsonObject.get("data");
-        JSONArray marketCoins = data.getJSONArray("marketCoins");
-        Map<String, Object> forex = (Map<String, Object>) marketCoins.get(index);
-        JSONArray forexPrice = (JSONArray) forex.get("price");
-        JSONArray price = (JSONArray) forexPrice.get(0);
-        
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put(type, price.get(1));
-        return resultMap;
-    }
+  
     
     
 }

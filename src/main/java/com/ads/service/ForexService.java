@@ -17,7 +17,7 @@ public interface ForexService {
      * 获取所有外汇信息
      * @return List
      */
-    List getAllForex();
+    List<Forex> getAll();
     
     /**
      * zhongnfuMarket 用于ADS数据采集

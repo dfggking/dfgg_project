@@ -3,6 +3,38 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
   
+  <!--新浪外汇采集-->
+  <bean name="sinaForexTaskJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass" value="com.ads.datatask.task.SinaForexTask" />
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="timeout" value="36000" />
+      </map>
+    </property>
+  </bean>
+  <!--新浪外汇 trigger 触发器-->
+  <bean id="sinaForexTaskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+    <property name="jobDetail" ref="sinaForexTaskJob"/>
+    <property name="startDelay" value="3000"/>
+    <property name="repeatInterval" value="3000"/><!--3秒调度一次-->
+  </bean>
+  
+  <!--bikan btc采集-->
+  <bean name="bikanTaskJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+    <property name="jobClass" value="com.ads.datatask.task.BikanBtcTask" />
+    <property name="jobDataAsMap">
+      <map>
+        <entry key="timeout" value="36000" />
+      </map>
+    </property>
+  </bean>
+  <!--bikan btc trigger 触发器-->
+  <bean id="bikanTaskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
+    <property name="jobDetail" ref="bikanTaskJob"/>
+    <property name="startDelay" value="3000"/>
+    <property name="repeatInterval" value="3000"/><!--3秒调度一次-->
+  </bean>
+  
   <!--外汇通 定时任务-->
   <bean name="whtDataScanTaskJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
     <property name="jobClass" value="com.ads.datatask.task.WhtDataScanTask" />
@@ -12,9 +44,6 @@
       </map>
     </property>
   </bean>
-  
-  
-  
   <!--外汇通 trigger 触发器-->
   <bean id="whtDataScanTaskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
     <property name="jobDetail" ref="whtDataScanTaskJob"/>
@@ -23,14 +52,14 @@
   </bean>
   
   
-  
   <!--启动任务-->
   <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
     
     <property name="triggers">
       <list>
-        <ref bean="whtDataScanTaskTrigger"></ref>
-        <!--<ref bean=""></ref>-->
+        <!--<ref bean="whtDataScanTaskTrigger"></ref>-->
+        <ref bean="sinaForexTaskTrigger"></ref>
+        <ref bean="bikanTaskTrigger"></ref>
       </list>
     </property>
     <property name="jobFactory" ref="quartzJobFactory"/>

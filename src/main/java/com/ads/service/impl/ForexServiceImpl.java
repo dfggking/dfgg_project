@@ -22,13 +22,13 @@ public class ForexServiceImpl extends BaseService implements ForexService {
     private final static Logger LOGGER = LogManager.getLogger(ForexServiceImpl.class);
     
     /**
-     * 获取所有外汇信息
+     * 获取库中所有外汇信息
      * @return List
      */
     @Override
-    public List getAllForex() {
-//        hibernateTemplate
-        return null;
+    public List<Forex> getAll() {
+        String hql = "from Forex where enabled=?";
+        return (List<Forex>) hibernateTemplate.find(hql, "1");
     }
     
     /**

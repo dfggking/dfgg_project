@@ -23,54 +23,5 @@ import java.util.Map;
 @RequestMapping(value = "forex")
 public class ForexController extends BaseController {
     private final static Logger LOGGER = Logger.getLogger(ForexController.class);
-    /**
-     * 外汇网站数据接口
-     */
-    private final static String ZFMARKET_FOREX_DATA = "zfMarket";
-    /**
-     * 外汇网站BTC接口
-     */
-    private final static String BTC_FOREX_DATA = "btcMarket";
-    /**
-     * 最新外汇价格信息
-     */
-    private final static String REAL_TIME_FOREX = "realTimeForex";
     
-    private final static String FOREX_LIST = "list";
-    
-    @Autowired
-    private ForexService forexService;
-    @Autowired
-    private DataScan ds;
-    
-    /**
-     * 外汇网站数据接口
-     * @return
-     */
-    @RequestMapping(value = ZFMARKET_FOREX_DATA)
-    @ResponseBody
-    public Map zfMarket(){
-        Map resultMap = new HashMap(16);
-//        resultMap.put("result", ds.zhongfuMarket());
-        return resultMap;
-    }
-    
-    @RequestMapping(value = BTC_FOREX_DATA)
-    @ResponseBody
-    public Map btcMarket() {
-        Map resultMap = new HashMap(16);
-        resultMap.put("result", ds.bitkan());
-        return resultMap;
-    }
-    
-    /**
-     * 获取最新外汇价格
-     * @return
-     */
-    @RequestMapping(value = REAL_TIME_FOREX)
-    @ResponseBody
-    public Map realTimeForex(){
-        Map resultMap = new HashMap(16);
-        return resultMap;
-    }
 }

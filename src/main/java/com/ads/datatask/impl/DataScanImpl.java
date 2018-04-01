@@ -4,6 +4,8 @@ import com.ads.common.http.HttpClientUtil;
 import com.ads.common.http.HttpResult;
 import com.ads.datatask.DataParser;
 import com.ads.datatask.DataScan;
+import com.ads.entity.Forex;
+import com.ads.service.ForexService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,40 @@ public class DataScanImpl implements DataScan {
     private HttpClientUtil httpUtil;
     @Autowired
     private DataParser dataParser;
+    @Autowired
+    private ForexService forexService;
+    
+    
+    /**
+     * 1、新浪外汇采集器
+     * url http://finance.sina.com.cn/forex/
+     * get http://hq.sinajs.cn/
+     * http://hq.sinajs.cn/?rn=1522557866589&list=USDCNY,USDHKD,EURUSD,GBPUSD,AUDUSD,USDCHF,USDCAD,USDJPY,NZDUSD
+     *
+     */
+    @Override
+    public void sinaForex() {
+//        String url = "http://hq.sinajs.cn/?list=USDCNY,USDHKD,EURUSD,GBPUSD,AUDUSD,USDCHF,USDCAD,USDJPY,NZDUSD,
+// EURJPY,GBPJPY,EURGBP,AUDJPY,EURCAD,EURCHF,CHFJPY,AUDCAD";
+        
+        List<Forex> forexs = forexService.getAll();
+        StringBuffer paramList = new StringBuffer();
+        for (Forex forex : forexs) {
+            paramList.append(forex.getSymbolCode());
+            paramList.append(",");
+        }
+        paramList.deleteCharAt(paramList.length() - 1);
+//        System.out.println(paramList);
+        String url = "http://hq.sinajs.cn/?list=" + paramList;
+        try {
+            String result = httpUtil.doGet(url);
+            // 解析数据并持久化到Redis
+            dataParser.parseSina(result);
+            LOGGER.info("sinaForexDataScan采集正常");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     
     /**
      * 中福ADS 数据采集接口
@@ -72,40 +108,37 @@ public class DataScanImpl implements DataScan {
      * url http://bitkan.com/price/w_price?categoryId=***
      */
     @Override
-    public List<Map<String, Object>> bitkan() {
+    public void bitkanBTC() {
         try {
             /*
              * 待采集币种
              */
             String[] btcs = new String[]{"btc", "ltc", "etc"};
-            List<Map<String, Object>> result = new ArrayList<>();
             
             String param1 = "{\"categoryId\":\"btc\"}";
             HttpResult httpResult1 = httpUtil.doPostJson("http://bitkan.com/price/w_price", param1);
             int statusCode1 = 200;
             if (Objects.equals(statusCode1, httpResult1.getStatusCode())) {
                 String resultJson = httpResult1.getContent();
-                result.add(dataParser.parserBikan("btc", resultJson, 0));
+                dataParser.parserBikan("btc", resultJson, 0);
             }
             String param2 = "{\"categoryId\":\"ltc\"}";
             HttpResult httpResult2 = httpUtil.doPostJson("http://bitkan.com/price/w_price", param2);
             int statusCode2 = 200;
             if (Objects.equals(statusCode2, httpResult2.getStatusCode())) {
                 String resultJson = httpResult2.getContent();
-                result.add(dataParser.parserBikan("ltc", resultJson, 1));
+                dataParser.parserBikan("ltc", resultJson, 1);
             }
             String param3 = "{\"categoryId\":\"etc\"}";
             HttpResult httpResult3 = httpUtil.doPostJson("http://bitkan.com/price/w_price", param3);
             int statusCode = 200;
             if (Objects.equals(statusCode, httpResult3.getStatusCode())) {
                 String resultJson = httpResult3.getContent();
-                result.add(dataParser.parserBikan("etc", resultJson, 6));
+                dataParser.parserBikan("etc", resultJson, 6);
             }
-            LOGGER.info("parserBikan采集正常");
-            return result;
+            LOGGER.info("bikanBTC采集正常");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new ArrayList<>();
     }
 }

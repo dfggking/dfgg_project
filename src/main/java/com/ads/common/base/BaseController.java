@@ -17,7 +17,6 @@ import java.util.Map;
 @Controller
 public abstract class BaseController {
     private final static Logger logger = LogManager.getLogger(BaseController.class);
-    
     /**
      * 返回结果状态值 0表示失败 1表示成功
      * */
@@ -30,6 +29,10 @@ public abstract class BaseController {
      * 返回提示信息 用于展示
      */
     protected final static String MSG = "msg";
+    /**
+     * 返回数据key
+     */
+    protected final static String RESULT_DATA = "resultData";
     
 //    protected final static Map<String, Object> BODY = new HashMap<>();
     /** 状态码， 1000表示正确， 详情参阅info状态表 */
