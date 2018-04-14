@@ -27,8 +27,7 @@ public class ForexServiceImpl extends BaseService implements ForexService {
      */
     @Override
     public List<Forex> getAll() {
-        String hql = "from Forex where enabled=?";
-        return (List<Forex>) hibernateTemplate.find(hql, "1");
+        return (List<Forex>) hibernateTemplate.find("from Forex where enabled=1");
     }
     
     /**

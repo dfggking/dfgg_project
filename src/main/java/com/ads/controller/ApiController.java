@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.ShardedJedis;
+import sun.security.provider.SHA;
 
 import javax.xml.crypto.Data;
 import java.util.HashMap;
@@ -50,9 +51,15 @@ public class ApiController extends BaseController {
     @ResponseBody
     public Map<String, Object> sinaforex(){
         Map<String, Object> resultMap = new HashMap<>(16);
-        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
-        resultMap.put(STATUS, "1");
-        resultMap.put(RESULT_DATA, shardedJedis.hgetAll("sinaForex"));
+        ShardedJedis shardedJedis = null;
+        try {
+            shardedJedis = redisDataSource.getRedisClient();
+            resultMap.put(STATUS, "1");
+            resultMap.put(RESULT_DATA, shardedJedis.hgetAll("sinaForex"));
+            redisDataSource.returnResource(shardedJedis);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return resultMap;
     }
     
@@ -60,9 +67,16 @@ public class ApiController extends BaseController {
     @ResponseBody
     public Map<String, Object> bikanBtc(){
         Map<String, Object> resultMap = new HashMap<>(16);
-        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
-        resultMap.put(STATUS, "1");
-        resultMap.put(RESULT_DATA, shardedJedis.hgetAll("bikanBTC"));
+        ShardedJedis shardedJedis = null;
+        try {
+            shardedJedis = redisDataSource.getRedisClient();
+            resultMap.put(STATUS, "1");
+            resultMap.put(RESULT_DATA, shardedJedis.hgetAll("bikanBTC"));
+            redisDataSource.returnResource(shardedJedis);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+       
         return resultMap;
     }
 }

@@ -30,4 +30,27 @@ public class RedisDataSourceImpl implements RedisDataSource {
         ShardedJedis shardedJedis = shardedJedisPool.getResource();
         return shardedJedis;
     }
+    
+    /**
+     * 回收
+     *
+     * @param shardedJedis
+     */
+    @Override
+    public void returnResource(ShardedJedis shardedJedis) {
+        shardedJedis.close();
+    }
+    
+    /**
+     * 回收
+     *
+     * @param shardedJedis
+     * @param broken
+     */
+    @Override
+    public void returnResource(ShardedJedis shardedJedis, boolean broken) {
+        shardedJedis.close();
+    }
+    
+    
 }

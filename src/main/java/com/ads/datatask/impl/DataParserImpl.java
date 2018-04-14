@@ -64,6 +64,7 @@ public class DataParserImpl implements DataParser {
             }
             // 入 Redis
             shardedJedis.hmset("sinaForex", itemMap);
+            redisDataSource.returnResource(shardedJedis);
             // 入 DB
 //            priceService.addBatch();
         }
@@ -78,14 +79,16 @@ public class DataParserImpl implements DataParser {
         JSONObject dataJsonObject = JSON.parseObject(content);
         JSONObject data = (JSONObject) dataJsonObject.get("data");
         JSONArray marketCoins = data.getJSONArray("marketCoins");
+        
         Map<String, Object> forex = (Map<String, Object>) marketCoins.get(index);
+        System.out.println(forex);
         JSONArray forexPrice = (JSONArray) forex.get("price");
         JSONArray price = (JSONArray) forexPrice.get(0);
         ShardedJedis shardedJedis = redisDataSource.getRedisClient();
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put(type, price.get(1).toString());
+        Map<String, String> resultMap = new HashMap<>(16);
+        resultMap.put(type, price.get(4).toString());
         shardedJedis.hmset("bikanBTC", resultMap);
-        
+        redisDataSource.returnResource(shardedJedis);
     }
     
     /**

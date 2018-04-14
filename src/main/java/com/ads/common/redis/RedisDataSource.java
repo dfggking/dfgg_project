@@ -15,5 +15,16 @@ public interface RedisDataSource {
      */
     ShardedJedis getRedisClient();
     
+    /**
+     * 回收
+     * @param shardedJedis
+     */
+    void returnResource(ShardedJedis shardedJedis);
     
+    /**
+     * 回收
+     * @param shardedJedis
+     * @param broken
+     */
+    void returnResource(ShardedJedis shardedJedis, boolean broken);
 }
