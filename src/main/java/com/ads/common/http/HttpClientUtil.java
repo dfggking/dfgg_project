@@ -73,6 +73,7 @@ public class HttpClientUtil implements BeanFactoryAware {
     public String doGet(String url) throws IOException {
         // 创建http GET请求
         HttpGet httpGet = new HttpGet(url);
+        httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36");
         //设置请求参数
         httpGet.setConfig(requestConfig);
         CloseableHttpResponse response = null;
@@ -157,6 +158,7 @@ public class HttpClientUtil implements BeanFactoryAware {
         // 创建http post 请求
         HttpPost httpPost = new HttpPost(url);
         httpPost.setConfig(requestConfig);
+        httpPost.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:50.0) Gecko/20100101 Firefox/50.0");
         if (Objects.nonNull(json)) {
             // 标识传递参数是application/json
             StringEntity stringEntity = new StringEntity(json, ContentType.APPLICATION_JSON);

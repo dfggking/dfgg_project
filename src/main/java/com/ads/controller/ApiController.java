@@ -2,7 +2,6 @@ package com.ads.controller;
 
 import com.ads.common.base.BaseController;
 import com.ads.common.redis.RedisDataSource;
-import com.ads.datatask.DataScan;
 import com.ads.service.ForexService;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -11,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import redis.clients.jedis.ShardedJedis;
-import sun.security.provider.SHA;
 
-import javax.xml.crypto.Data;
 import java.util.HashMap;
 import java.util.Map;
 

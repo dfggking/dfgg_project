@@ -43,11 +43,5 @@ public class TestMybatis {
         sqlSession = sqlSessionFactory.openSession();
     }
     
-    @Test
-    public void testSelectById(){
-        String statement = "selectFeedbackById";
-        Feedback feedback = sqlSession.selectOne(statement, 1);
-        System.out.println(feedback.getContent());
-        sqlSession.close();
-    }
+  
 }

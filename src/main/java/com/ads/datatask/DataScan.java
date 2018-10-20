@@ -15,26 +15,13 @@ public interface DataScan {
      * 1、新浪外汇采集器
      */
     void sinaForex();
-    
+
     /**
-     * 中福ADS 数据接口
-     * url http://market.forex.com.cn/zhongfuMarketIndex/findAllPriceAjax.do
-     */
-    void zhongfuMarket();
-    
-    /**
-     * 来自网站request URL
-     * website http://market.forex.com.cn
-     * url http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable.do
-     */
-    void zhongfu();
-    
-    /**
+     * 2、BTC采集器
      * bitkan网站request URL
      * website http://bitkan.com/price/
      * url http://bitkan.com/price/w_price?categoryId=***
      */
     void bitkanBTC();
-    
     
 }

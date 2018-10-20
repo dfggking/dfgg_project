@@ -75,18 +75,24 @@ public class DataParserImpl implements DataParser {
      * @param content 采集内容
      */
     @Override
-    public void parserBikan(String type, String content, int index) {
+    public void parserBikan(String content) {
+        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
         JSONObject dataJsonObject = JSON.parseObject(content);
         JSONObject data = (JSONObject) dataJsonObject.get("data");
-        JSONArray marketCoins = data.getJSONArray("marketCoins");
-        
-        Map<String, Object> forex = (Map<String, Object>) marketCoins.get(index);
-        System.out.println(forex);
-        JSONArray forexPrice = (JSONArray) forex.get("price");
-        JSONArray price = (JSONArray) forexPrice.get(0);
-        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+        JSONArray marketCoins = data.getJSONArray("tickers");
         Map<String, String> resultMap = new HashMap<>(16);
-        resultMap.put(type, price.get(4).toString());
+        
+        Map<String, Object> BTCUSD = (Map<String, Object>) marketCoins.get(12);
+        String forexPrice1 = BTCUSD.get("last").toString();
+        resultMap.put("BTCUSD", forexPrice1.toString());
+        Map<String, Object> BTCJPY = (Map<String, Object>) marketCoins.get(7);
+        String forexPrice2 = BTCUSD.get("last").toString();
+        resultMap.put("BTCJPY", forexPrice2.toString());
+        Map<String, Object> BTCUSDT = (Map<String, Object>) marketCoins.get(3);
+        String forexPrice3 = BTCUSDT.get("last").toString();
+        resultMap.put("BTCUSDT", forexPrice3.toString());
+    
+        System.out.println(resultMap);
         shardedJedis.hmset("bikanBTC", resultMap);
         redisDataSource.returnResource(shardedJedis);
     }

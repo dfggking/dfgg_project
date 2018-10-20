@@ -43,10 +43,6 @@ public class DataScanTest {
         dataScan.bitkanBTC();
     }
     
-    @Test
-    public void testZfmarket(){
-        dataScan.zhongfuMarket();
-    }
     
 //    @Test
 //    public void testZhongfu(){

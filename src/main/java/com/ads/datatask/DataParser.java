@@ -16,11 +16,9 @@ public interface DataParser {
     void parseSina(String result);
     /**
      * 币看 数据解析
-     * @param type 币类别
      * @param content 采集内容
-     * @param index 数据索引
      */
-    void parserBikan(String type, String content, int index);
+    void parserBikan(String content);
     /**
      * 外汇通 数据解析
      * @param content
