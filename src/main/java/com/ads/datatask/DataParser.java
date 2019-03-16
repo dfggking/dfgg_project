@@ -19,18 +19,6 @@ public interface DataParser {
      * @param content 采集内容
      */
     void parserBikan(String content);
-    /**
-     * 外汇通 数据解析
-     * @param content
-     */
-    void parseZhongfuMarket(String content);
-    
-    /**
-     * 外汇通 数据解析
-     * @param content 采集内容
-     */
-    void parserWaiHuiTong(String content);
-    
-    
+
     
 }

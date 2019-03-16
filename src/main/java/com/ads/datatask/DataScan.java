@@ -18,9 +18,7 @@ public interface DataScan {
 
     /**
      * 2、BTC采集器
-     * bitkan网站request URL
-     * website http://bitkan.com/price/
-     * url http://bitkan.com/price/w_price?categoryId=***
+     * https://tvc4.forexpros.com/e6da7627478c36c2df0784dca86630c5/1552703924/6/6/28/quotes?symbols=Bitfinex:BTC/USD,Bitfinex:ETH/USD,ZB_COM:LTC/USD,,Bittrex:BCH/BTC
      */
     void bitkanBTC();
     

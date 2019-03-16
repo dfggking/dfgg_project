@@ -2,8 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-  
-  <!--新浪外汇采集-->
+  <!--
+  &lt;!&ndash;新浪外汇采集&ndash;&gt;
   <bean name="sinaForexTaskJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
     <property name="jobClass" value="com.ads.datatask.task.SinaForexTask" />
     <property name="jobDataAsMap">
@@ -12,12 +12,12 @@
       </map>
     </property>
   </bean>
-  <!--新浪外汇 trigger 触发器-->
+  &lt;!&ndash;新浪外汇 trigger 触发器&ndash;&gt;
   <bean id="sinaForexTaskTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
     <property name="jobDetail" ref="sinaForexTaskJob"/>
     <property name="startDelay" value="3000"/>
-    <property name="repeatInterval" value="3000"/><!--3秒调度一次-->
-  </bean>
+    <property name="repeatInterval" value="3000"/>&lt;!&ndash;3秒调度一次&ndash;&gt;
+  </bean>-->
   
   <!--bikan btc采集-->
   <bean name="bikanTaskJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
@@ -41,7 +41,7 @@
     <property name="triggers">
       <list>
         <!--<ref bean="whtDataScanTaskTrigger"></ref>-->
-        <ref bean="sinaForexTaskTrigger"></ref>
+        <!--<ref bean="sinaForexTaskTrigger"></ref>-->
         <ref bean="bikanTaskTrigger"></ref>
       </list>
     </property>

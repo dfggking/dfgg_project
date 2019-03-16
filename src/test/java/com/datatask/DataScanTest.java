@@ -44,11 +44,6 @@ public class DataScanTest {
     }
     
     
-//    @Test
-//    public void testZhongfu(){
-//        dataScan.zhongfu();
-//    }
-    
     /**
      * 注：不要执行，该方法为将外汇数据采集到外汇表中否则会重复
      */

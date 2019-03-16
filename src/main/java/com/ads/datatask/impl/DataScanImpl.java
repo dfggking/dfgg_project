@@ -65,19 +65,12 @@ public class DataScanImpl implements DataScan {
     }
     
     /**
-     * website http://bitkan.com/price/
-     * url https://bitkan.com/price/category/tickers?category=btc
+     * https://tvc4.forexpros.com/e6da7627478c36c2df0784dca86630c5/1552703924/6/6/28/quotes?symbols=Bitfinex:BTC/USD,Bitfinex:ETH/USD,ZB_COM:LTC/USD,,Bittrex:BCH/BTC
      */
     @Override
     public void bitkanBTC() {
         try {
-            /*
-             * 待采集币种
-             */
-            String[] btcs = new String[]{"btc", "ltc", "etc"};
-            
-            String content = httpUtil.doGet("https://bitkan.com/price/category/tickers?category=btc");
-            int statusCode1 = 200;
+            String content = httpUtil.doGet("https://tvc4.forexpros.com/e6da7627478c36c2df0784dca86630c5/1552703924/6/6/28/quotes?symbols=Bitfinex:BTC/USD,Bitfinex:ETH/USD,ZB_COM:LTC/USD,,Bittrex:BCH/BTC");
             dataParser.parserBikan(content);
         } catch (IOException e) {
             e.printStackTrace();
