@@ -26,59 +26,9 @@ import java.util.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class DataScanTest {
-    @Autowired
-    private HttpClientUtil httpUtil;
-    @Autowired
-    private DataScan dataScan;
-    @Autowired
-    private ForexService forexService;
     
     @Test
-    public void sinaForex(){
-        dataScan.sinaForex();
+    public void test(){
+        System.out.println("test");
     }
-    
-    @Test
-    public void bikanBTC(){
-        dataScan.bitkanBTC();
-    }
-    
-    
-    /**
-     * 注：不要执行，该方法为将外汇数据采集到外汇表中否则会重复
-     */
-//    @Test
-//    public void scanForexList(){
-//        try {
-//            HttpResult httpResult = httpUtil.doPost("http://market.forex.com.cn/zhongfuMarketIndex/ajaxTable" +
-//                    ".do?classifyId=001");
-//            int statusCode = 200;
-//            if (Objects.equals(statusCode, httpResult.getStatusCode())) {
-//                String resultJson = httpResult.getContent();
-//
-//                JSONObject json = JSON.parseObject(resultJson);
-//
-//                List<Map<String, Object>> forexList = (List<Map<String, Object>>) json.get("list");
-//                List<Forex> list = new ArrayList<>();
-//                for (Map<String, Object> entry : forexList) {
-//                    Forex forex = new Forex();
-//                    forex.setId(UUIDUtils.getUUID());
-//                    forex.setSymbolId((String) entry.get("symbolId"));
-//                    forex.setSymbolCode((String) entry.get("symbolCode"));
-//                    forex.setSymbolName((String) entry.get("symbolName"));
-//                    forex.setEnabled("1");
-//                    forex.setCreatedTime(new Timestamp(System.currentTimeMillis()));
-//                    list.add(forex);
-//                }
-//                forexService.addBatch(list);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-//    @Test
-//    public void testBitkanDataScan(){
-//        ds.bitkanDataScan();
-//    }
 }

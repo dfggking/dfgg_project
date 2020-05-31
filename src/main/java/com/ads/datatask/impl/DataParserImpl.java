@@ -1,9 +1,7 @@
 package com.ads.datatask.impl;
 
 import com.ads.common.redis.RedisDataSource;
-import com.ads.common.util.UUIDUtils;
 import com.ads.datatask.DataParser;
-import com.ads.entity.Price;
 import com.ads.service.PriceService;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -15,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.ShardedJedis;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -63,7 +59,7 @@ public class DataParserImpl implements DataParser {
                 }
             }
             // 入 Redis
-            shardedJedis.hmset("sinaForex", itemMap);
+            shardedJedis.hmset("sinaForex_new", itemMap);
             redisDataSource.returnResource(shardedJedis);
             // 入 DB
 //            priceService.addBatch();
@@ -105,12 +101,82 @@ public class DataParserImpl implements DataParser {
         resultMap.put("BCHBTC", forexPrice4.toString());
     
         System.out.println(resultMap);
-        shardedJedis.hmset("bikanBTC", resultMap);
+        shardedJedis.hmset("bikanBTC_new", resultMap);
         redisDataSource.returnResource(shardedJedis);
     }
-
     
-  
+    /**
+     * 原始数据格式：{"errorCode":0,"message":"操作成功","result":{"businessCode":0,"message":"操作成功","data":[{"preDrawCode":"06,02,11,05,07","groupCode":6,"preDrawTime":"2019-03-17 11:50:30","preDrawIssue":2019031708,"sumNum":31,"sumBigSmall":0,"sumSingleDouble":0,"behindThree":0,"betweenThree":0,"dragonTiger":1,"lastThree":0},{"preDrawCode":"08,11,01,09,06","groupCode":6,"preDrawTime":"2019-03-17 11:30:30","preDrawIssue":2019031707,"sumNum":35,"sumBigSmall":0,"sumSingleDouble":0,"behindThree":0,"betweenThree":0,"dragonTiger":0,"lastThree":0},{"preDrawCode":"09,11,03,06,02","groupCode":6,"preDrawTime":"2019-03-17 11:10:30","preDrawIssue":2019031706,"sumNum":31,"sumBigSmall":0,"sumSingleDouble":0,"behindThree":0,"betweenThree":0,"dragonTiger":0,"lastThree":1},{"preDrawCode":"07,11,06,04,03","groupCode":6,"preDrawTime":"2019-03-17 10:50:30","preDrawIssue":2019031705,"sumNum":31,"sumBigSmall":0,"sumSingleDouble":0,"behindThree":1,"betweenThree":0,"dragonTiger":0,"lastThree":1},{"preDrawCode":"07,09,03,02,08","groupCode":6,"preDrawTime":"2019-03-17 10:30:30","preDrawIssue":2019031704,"sumNum":29,"sumBigSmall":1,"sumSingleDouble":0,"behindThree":0,"betweenThree":1,"dragonTiger":1,"lastThree":1},{"preDrawCode":"04,02,06,08,03","groupCode":6,"preDrawTime":"2019-03-17 10:10:30","preDrawIssue":2019031703,"sumNum":23,"sumBigSmall":1,"sumSingleDouble":0,"behindThree":0,"betweenThree":0,"dragonTiger":0,"lastThree":0},{"preDrawCode":"11,03,07,06,02","groupCode":6,"preDrawTime":"2019-03-17 09:50:30","preDrawIssue":2019031702,"sumNum":29,"sumBigSmall":1,"sumSingleDouble":0,"behindThree":0,"betweenThree":1,"dragonTiger":0,"lastThree":1},{"preDrawCode":"06,07,03,08,05","groupCode":6,"preDrawTime":"2019-03-17 09:30:30","preDrawIssue":2019031701,"sumNum":29,"sumBigSmall":1,"sumSingleDouble":0,"behindThree":1,"betweenThree":1,"dragonTiger":0,"lastThree":0}]}}
+     * @param content
+     */
+    @Override
+    public void parserGd11x5(String content) {
+        Map<String, String> resultMap = parseCai(content);
+        System.out.println(resultMap);
+        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+        shardedJedis.hmset("gd11x5_new", resultMap);
+        redisDataSource.returnResource(shardedJedis);
+    }
+    
+    @Override
+    public void parserLn11x5(String jsonLn11x5) {
+        Map<String, String> resultMap = parseCai(jsonLn11x5);
+        System.out.println(resultMap);
+        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+    
+        shardedJedis.hmset("ln11x5_new", resultMap);
+        redisDataSource.returnResource(shardedJedis);
+    }
+    
+    @Override
+    public void parserJx11x5(String jsonJx11x5) {
+        Map<String, String> resultMap = parseCai(jsonJx11x5);
+        System.out.println(resultMap);
+        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+    
+        shardedJedis.hmset("jx11x5_new", resultMap);
+        redisDataSource.returnResource(shardedJedis);
+    }
+    
+    @Override
+    public void parserCqssc(String jsonCqssc) {
+        Map<String, String> resultMap = parseCai(jsonCqssc);
+        System.out.println(resultMap);
+        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+    
+        shardedJedis.hmset("cqssc_new", resultMap);
+        redisDataSource.returnResource(shardedJedis);
+    }
+    
+    @Override
+    public void parserJl11x5(String jsonJl11x5) {
+        Map<String, String> resultMap = parseCai(jsonJl11x5);
+        System.out.println(resultMap);
+        ShardedJedis shardedJedis = redisDataSource.getRedisClient();
+    
+        shardedJedis.hmset("jl11x5_new", resultMap);
+        redisDataSource.returnResource(shardedJedis);
+    }
     
     
+    private Map<String, String> parseCai(String content){
+        JSONObject originJson = JSON.parseObject(content);
+        JSONObject resultJson = (JSONObject) originJson.get("result");
+        JSONArray dateArray = (JSONArray) resultJson.get("data");
+    
+        // 返回值
+        Map<String, String> resultMap = new HashMap<>(16);
+        List<JSONObject> dataList = new ArrayList();
+        for (Object obj:dateArray) {
+            JSONObject item = (JSONObject) obj;
+            JSONObject data = new JSONObject();
+            data.put("expect", "20" + item.get("preDrawIssue").toString()); // 期数
+            data.put("opencode", item.get("preDrawCode").toString()); // 开奖号码
+            data.put("opentime", item.get("preDrawTime").toString());
+            dataList.add(data);
+        }
+        resultMap.put("data", dataList.toString());
+    
+        return resultMap;
+    }
 }

@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 外汇API接口
+ * 数据采集API
  * @author dfggking@hotmail.com
  * @version 1.0
  * @date 2018/2/27
@@ -35,8 +35,12 @@ public class ApiController extends BaseController {
      */
     public final static String BIKAN_BTC_SERVER = "bitkanBTC";
     
-    @Autowired
-    private ForexService forexService;
+    public final static String GD11X5_SERVER = "gd11x5";
+    public final static String LN11X5_SERVER = "ln11x5";
+    public final static String JX11X5_SERVER = "jx11x5";
+    public final static String CQSSC_SERVER = "cqssc";
+    public final static String JL11X5_SERVER = "jl11x5";
+    
     @Autowired
     private RedisDataSource redisDataSource;
     
@@ -52,7 +56,7 @@ public class ApiController extends BaseController {
         try {
             shardedJedis = redisDataSource.getRedisClient();
             resultMap.put(STATUS, "1");
-            resultMap.put(RESULT_DATA, shardedJedis.hgetAll("sinaForex"));
+            resultMap.put(RESULT_DATA, shardedJedis.hgetAll("sinaForex_new"));
             redisDataSource.returnResource(shardedJedis);
         }catch (Exception e){
             e.printStackTrace();
@@ -68,7 +72,7 @@ public class ApiController extends BaseController {
         try {
             shardedJedis = redisDataSource.getRedisClient();
             resultMap.put(STATUS, "1");
-            resultMap.put(RESULT_DATA, shardedJedis.hgetAll("bikanBTC"));
+            resultMap.put(RESULT_DATA, shardedJedis.hgetAll("bikanBTC_new"));
             redisDataSource.returnResource(shardedJedis);
         }catch (Exception e){
             e.printStackTrace();
@@ -76,4 +80,86 @@ public class ApiController extends BaseController {
        
         return resultMap;
     }
+    
+    @RequestMapping(value = GD11X5_SERVER)
+    @ResponseBody
+    public Map<String, Object> gd11x5(){
+        Map<String, Object> resultMap = new HashMap<>(16);
+        ShardedJedis shardedJedis = null;
+        try {
+            shardedJedis = redisDataSource.getRedisClient();
+            resultMap.put("code", "gd11x5_new");
+            resultMap.put("data", shardedJedis.hgetAll("gd11x5_new").get("data"));
+            redisDataSource.returnResource(shardedJedis);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    
+    @RequestMapping(value = LN11X5_SERVER)
+    @ResponseBody
+    public Map<String, Object> ln11x5(){
+        Map<String, Object> resultMap = new HashMap<>(16);
+        ShardedJedis shardedJedis = null;
+        try {
+            shardedJedis = redisDataSource.getRedisClient();
+            resultMap.put("code", "ln11x5_new");
+            resultMap.put("data", shardedJedis.hgetAll("ln11x5_new").get("data"));
+            redisDataSource.returnResource(shardedJedis);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    
+    @RequestMapping(value = JX11X5_SERVER)
+    @ResponseBody
+    public Map<String, Object> jx11x5(){
+        Map<String, Object> resultMap = new HashMap<>(16);
+        ShardedJedis shardedJedis = null;
+        try {
+            shardedJedis = redisDataSource.getRedisClient();
+            resultMap.put("code", "jx11x5_new");
+            resultMap.put("data", shardedJedis.hgetAll("jx11x5_new").get("data"));
+            redisDataSource.returnResource(shardedJedis);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    
+    @RequestMapping(value = CQSSC_SERVER)
+    @ResponseBody
+    public Map<String, Object> cqssc(){
+        Map<String, Object> resultMap = new HashMap<>(16);
+        ShardedJedis shardedJedis = null;
+        try {
+            shardedJedis = redisDataSource.getRedisClient();
+            resultMap.put("code", "cqssc_new");
+            resultMap.put("data", shardedJedis.hgetAll("cqssc_new").get("data"));
+            redisDataSource.returnResource(shardedJedis);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    
+    @RequestMapping(value = JL11X5_SERVER)
+    @ResponseBody
+    public Map<String, Object> jl11x5(){
+        Map<String, Object> resultMap = new HashMap<>(16);
+        ShardedJedis shardedJedis = null;
+        try {
+            shardedJedis = redisDataSource.getRedisClient();
+            resultMap.put("code", "jl11x5_new");
+            resultMap.put("data", shardedJedis.hgetAll("jl11x5_new").get("data"));
+            redisDataSource.returnResource(shardedJedis);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    
+    
 }

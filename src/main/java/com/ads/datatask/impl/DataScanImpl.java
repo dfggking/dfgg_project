@@ -76,4 +76,30 @@ public class DataScanImpl implements DataScan {
             e.printStackTrace();
         }
     }
+    
+    
+    @Override
+    public void cai() {
+        try {
+            // Gd11x5
+            String jsonGd11x5 = httpUtil.doGet("https://api.api68.com/ElevenFive/getElevenFiveList.do?date=&lotCode=10006");
+            dataParser.parserGd11x5(jsonGd11x5);
+            // Ln11x5
+            String jsonLn11x5 = httpUtil.doGet("https://api.api68.com/ElevenFive/getElevenFiveList.do?date=&lotCode=10019");
+            dataParser.parserLn11x5(jsonLn11x5);
+            // Jx11x5
+            String jsonJx11x5 = httpUtil.doGet("https://api.api68.com/ElevenFive/getElevenFiveList.do?date=&lotCode=10015");
+            dataParser.parserJx11x5(jsonJx11x5);
+            // Cqssc
+//            String jsonCqssc = httpUtil.doGet("https://api.api68.com/CQShiCai/getBaseCQShiCaiList.do?lotCode=10002");
+//            dataParser.parserCqssc(jsonCqssc);
+            // Jl11x5
+            String jsonJl11x5 = httpUtil.doGet("https://api.api68.com/ElevenFive/getElevenFiveList.do?date=&lotCode=10023");
+            dataParser.parserJl11x5(jsonJl11x5);
+        
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+    }
 }

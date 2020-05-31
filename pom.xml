@@ -5,7 +5,7 @@
   <artifactId>ads</artifactId>
   <packaging>war</packaging>
   <version>1.0.0</version>
-  <name>ads Maven Webapp</name>
+  <name>dfgg_project</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>

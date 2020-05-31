@@ -19,6 +19,14 @@ public interface DataParser {
      * @param content 采集内容
      */
     void parserBikan(String content);
-
+  
+    void parserGd11x5(String content);
     
+    void parserLn11x5(String jsonLn11x5);
+    
+    void parserJx11x5(String jsonJx11x5);
+    
+    void parserCqssc(String jsonCqssc);
+    
+    void parserJl11x5(String jsonJl11x5);
 }
